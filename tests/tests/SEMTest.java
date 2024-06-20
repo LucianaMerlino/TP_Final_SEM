@@ -12,6 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.po2.unq.TPFinalSEM.Celular;
 import ar.edu.po2.unq.TPFinalSEM.CompraPuntual;
 import ar.edu.po2.unq.TPFinalSEM.Estacionamiento;
 import ar.edu.po2.unq.TPFinalSEM.EstacionamientoViaApp;
@@ -36,12 +37,12 @@ class SEMTest {
 	EstacionamientoViaApp segundoEstacionamientoViaApp;
 	EstacionamientoViaApp tercerEstacionamientoViaApp;
 	
+	CompraPuntual compraPuntual;
 	
 	// Se inicializan los DOC que van a ser mockeados:
 	
 	
 	//CompraPuntual compraPuntual;
-	//EstacionamientoViaCompra primerEstacionamientoViaCompra = new EstacionamientoViaCompra(compraPuntual); // TODO: solucionar el null pointer exception que devuelve que compraPuntual es null
 	
 	String patenteBuscada;
 	
@@ -57,18 +58,11 @@ class SEMTest {
 	finFranja = LocalTime.of(20, 0);
 	
 	estacionamientos = new ArrayList<Estacionamiento>();
-	//estacionamientos.add(primerEstacionamientoViaCompra);
+	
 	estacionamientos.add(primerEstacionamientoViaApp);
 	estacionamientos.add(segundoEstacionamientoViaApp);
-	estacionamientos.add(tercerEstacionamientoViaApp);
+	estacionamientos.add(tercerEstacionamientoViaApp);	
 	
-	estacionamientosEsperados = new ArrayList<Estacionamiento>();
-	estacionamientosEsperados.add(tercerEstacionamientoViaApp);
-	
-		
-	//compraPuntual = mock(CompraPuntual.class); 
-	patenteBuscada = "ABC 123";
-	//primerEstacionamientoViaCompra = mock(EstacionamientoViaCompra.class);
 	primerEstacionamientoViaApp = mock(EstacionamientoViaApp.class);
 	segundoEstacionamientoViaApp = mock(EstacionamientoViaApp.class);
 	tercerEstacionamientoViaApp = mock(EstacionamientoViaApp.class);
@@ -80,27 +74,25 @@ class SEMTest {
 	
 	// inicializacion de los mocks stubs con los comportamientos esperados:
 	
-	//when(primerEstacionamientoViaCompra.getEstaVigente()).thenReturn(true);
-	when(primerEstacionamientoViaApp.getEstaVigente()).thenReturn(false);
-	when(primerEstacionamientoViaApp.getPatente()).thenReturn("WRT444");
+	when(primerEstacionamientoViaApp.esVigente(primerEstacionamientoViaApp)).thenReturn(false);
+	when(primerEstacionamientoViaApp.getNumeroDeCelular()).thenReturn(1234567);
 	
-	when(segundoEstacionamientoViaApp.getEstaVigente()).thenReturn(true);
-	when(segundoEstacionamientoViaApp.getPatente()).thenReturn("ASD222");
+	when(segundoEstacionamientoViaApp.esVigente(segundoEstacionamientoViaApp)).thenReturn(true);
+	when(segundoEstacionamientoViaApp.getNumeroDeCelular()).thenReturn(12345);
 	
-	when(tercerEstacionamientoViaApp.getEstaVigente()).thenReturn(true);
-	when(tercerEstacionamientoViaApp.getPatente()).thenReturn(patenteBuscada);
-	
-	//when(compraPuntual.getFechaHora()).thenReturn(LocalDateTime.now());
+	when(tercerEstacionamientoViaApp.esVigente(tercerEstacionamientoViaApp)).thenReturn(true);
+	when(tercerEstacionamientoViaApp.getNumeroDeCelular()).thenReturn(123);
 	
 	}
-	
 	
 	// Verify:
 
 	@Test
 	void finalizarEstacionamientoViaAppTest() {
 		
-		assertEquals(sem.finalizarEstacionamientoViaApp(patenteBuscada), estacionamientosEsperados);
+		sem.finalizarEstacionamientoViaApp(12345);
+		
+		assertFalse(segundoEstacionamientoViaApp.esVigente(segundoEstacionamientoViaApp));
 		
 	}
 

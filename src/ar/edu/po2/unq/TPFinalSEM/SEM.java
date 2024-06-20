@@ -1,5 +1,7 @@
 package ar.edu.po2.unq.TPFinalSEM;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,24 +34,20 @@ public class SEM {
 		return this.estacionamientos;
 	}	
 	
-
-	public List<EstacionamientoViaApp> finalizarEstacionamientoViaApp(String patente) {
 	
-		// Filtro los estacionamientos y me quedo con los EstacionamientoViaApp, pero no me gusta tener que hacer un down casting 
+	public void finalizarEstacionamientoViaApp(int numeroDeCelular) {
 	
-		List<EstacionamientoViaApp> estacionamientosViaApp = this.getEstacionamientos().stream()
-																					  .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
-																					  .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
-																					  .filter(estacionamiento -> estacionamiento.getPatente().equals(patente)) 
-																					  .collect(Collectors.toList());
-																					  
-		List<EstacionamientoViaApp> estacionamientosFinalizados = estacionamientosViaApp.stream()
-																					    .map(estacionamientoViaApp -> {
-        																					 estacionamientoViaApp.setEstaVigente(false);
-        																					 return estacionamientoViaApp;
-    																					})
-    																					.collect(Collectors.toList());
-		return estacionamientosFinalizados;																	
+		LocalDate diaActual = LocalDate.now();
+		LocalTime horaActual = LocalTime.now();
+	
+		LocalDateTime fechaYHoraActual = LocalDateTime.of(diaActual, horaActual);
+		
+		this.getEstacionamientos().stream()
+								  .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
+								  .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
+								  .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == numeroDeCelular)
+								  .filter(estacionamiento -> estacionamiento.esVigente(estacionamiento))
+								  .forEach(estacionamiento -> estacionamiento.setHoraFin(fechaYHoraActual));     																	
 		
 	}
 

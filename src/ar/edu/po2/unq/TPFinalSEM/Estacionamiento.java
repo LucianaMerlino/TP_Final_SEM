@@ -6,27 +6,31 @@ public abstract class Estacionamiento {
 	protected LocalDateTime horaInicio;
 	protected LocalDateTime horaFin;
 	protected String patente;
-	protected boolean estaVigente;
 	
 	public Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, 
-						   String patente, boolean estaVigente) {
+						   String patente) {
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.patente = patente;
-		this.estaVigente = estaVigente;
 	}
-	
-	
+		
 	public String getPatente() {
 
 		return this.patente;
 	}
 	
-	public boolean getEstaVigente() {
-		return this.estaVigente;
+	public LocalDateTime getHoraInicio() {
+		return this.horaInicio;
 	}
 	
-	public void setEstaVigente(boolean estaVigente) {
-		this.estaVigente = estaVigente;
+	public LocalDateTime getHoraFin() {
+		return this.horaFin;
 	}
+	
+	public void setHoraFin(LocalDateTime hora) {
+		this.horaFin = hora;
+	}
+
+	protected abstract boolean hayEstacionamientoVigente(String patente, int numeroDeCelular);
+
 }
