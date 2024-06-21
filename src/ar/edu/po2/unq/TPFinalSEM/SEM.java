@@ -3,9 +3,7 @@ package ar.edu.po2.unq.TPFinalSEM;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class SEM {
 	
@@ -46,9 +44,7 @@ public class SEM {
 								  .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
 								  .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
 								  .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == numeroDeCelular)
-								  .filter(estacionamiento -> estacionamiento.esVigente(estacionamiento))
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(fechaYHoraActual));     																	
-		
 	}
 
 	public void iniciarEstacionamientoViaApp(String patente, int nroCelular) {

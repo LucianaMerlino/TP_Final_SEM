@@ -1,9 +1,7 @@
 package tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -12,11 +10,8 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.po2.unq.TPFinalSEM.Celular;
-import ar.edu.po2.unq.TPFinalSEM.CompraPuntual;
 import ar.edu.po2.unq.TPFinalSEM.Estacionamiento;
 import ar.edu.po2.unq.TPFinalSEM.EstacionamientoViaApp;
-import ar.edu.po2.unq.TPFinalSEM.EstacionamientoViaCompra;
 import ar.edu.po2.unq.TPFinalSEM.SEM;
 
 
@@ -37,14 +32,7 @@ class SEMTest {
 	EstacionamientoViaApp segundoEstacionamientoViaApp;
 	EstacionamientoViaApp tercerEstacionamientoViaApp;
 	
-	CompraPuntual compraPuntual;
-	
 	// Se inicializan los DOC que van a ser mockeados:
-	
-	
-	//CompraPuntual compraPuntual;
-	
-	String patenteBuscada;
 	
 	// Excercise:
 
@@ -56,6 +44,17 @@ class SEMTest {
 	precioPorHora = 40;
 	inicioFranja = LocalTime.of(7, 0);
 	finFranja = LocalTime.of(20, 0);
+	LocalTime horaInicioEst = LocalTime.of(8, 0);
+	LocalDate diaInicioEst = LocalDate.of(2024, 6, 21);
+	LocalDateTime diayFechaEst = LocalDateTime.of(diaInicioEst, horaInicioEst);
+	
+	LocalTime horaFinEst = LocalTime.of(9, 0);
+	LocalDate diaFinEst = LocalDate.of(2024, 6, 21);
+	LocalDateTime diayFechaFinEst = LocalDateTime.of(diaFinEst, horaFinEst);
+	
+	primerEstacionamientoViaApp = new EstacionamientoViaApp(diayFechaEst, diayFechaFinEst, "123", 12345);
+	segundoEstacionamientoViaApp = new EstacionamientoViaApp(diayFechaEst, diayFechaFinEst, "1234", 1234);
+	tercerEstacionamientoViaApp = new EstacionamientoViaApp(diayFechaEst, diayFechaFinEst, "12345", 123);
 	
 	estacionamientos = new ArrayList<Estacionamiento>();
 	
@@ -63,26 +62,10 @@ class SEMTest {
 	estacionamientos.add(segundoEstacionamientoViaApp);
 	estacionamientos.add(tercerEstacionamientoViaApp);	
 	
-	primerEstacionamientoViaApp = mock(EstacionamientoViaApp.class);
-	segundoEstacionamientoViaApp = mock(EstacionamientoViaApp.class);
-	tercerEstacionamientoViaApp = mock(EstacionamientoViaApp.class);
-	
-	
 	// SUT:
 		
 	sem = new SEM(precioPorHora, inicioFranja, finFranja, estacionamientos);
-	
-	// inicializacion de los mocks stubs con los comportamientos esperados:
-	
-	when(primerEstacionamientoViaApp.esVigente(primerEstacionamientoViaApp)).thenReturn(false);
-	when(primerEstacionamientoViaApp.getNumeroDeCelular()).thenReturn(1234567);
-	
-	when(segundoEstacionamientoViaApp.esVigente(segundoEstacionamientoViaApp)).thenReturn(true);
-	when(segundoEstacionamientoViaApp.getNumeroDeCelular()).thenReturn(12345);
-	
-	when(tercerEstacionamientoViaApp.esVigente(tercerEstacionamientoViaApp)).thenReturn(true);
-	when(tercerEstacionamientoViaApp.getNumeroDeCelular()).thenReturn(123);
-	
+
 	}
 	
 	// Verify:
@@ -90,9 +73,14 @@ class SEMTest {
 	@Test
 	void finalizarEstacionamientoViaAppTest() {
 		
-		sem.finalizarEstacionamientoViaApp(12345);
+		sem.finalizarEstacionamientoViaApp(1234);
+		EstacionamientoViaApp estacionamientoFinalizado = sem.getEstacionamientos().stream()
+															 .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
+								  							 .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
+								  							 .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == 1234)
+								  							 .findFirst().get();
 		
-		assertFalse(segundoEstacionamientoViaApp.esVigente(segundoEstacionamientoViaApp));
+		assertTrue(estacionamientoFinalizado.noEsVigente());
 		
 	}
 
