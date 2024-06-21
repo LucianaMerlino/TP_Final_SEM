@@ -1,5 +1,7 @@
 package ar.edu.po2.unq.TPFinalSEM;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public abstract class Estacionamiento {
 	
@@ -31,6 +33,16 @@ public abstract class Estacionamiento {
 		this.horaFin = hora;
 	}
 
-	protected abstract boolean hayEstacionamientoVigente(String patente, int numeroDeCelular);
+
+	public boolean noEsVigente() {
+		
+		LocalDate diaActual = LocalDate.now();
+		LocalTime horaActual = LocalTime.now();
+	
+		LocalDateTime fechaYHoraActual = LocalDateTime.of(diaActual, horaActual);
+		
+		return this.getHoraFin().getHour() == fechaYHoraActual.getHour() ;
+			
+	}
 
 }

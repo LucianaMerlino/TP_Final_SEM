@@ -18,10 +18,4 @@ public class EstacionamientoViaCompra extends Estacionamiento {
 		
 	}
 
-	@Override
-	protected boolean hayEstacionamientoVigente(String patente, int numeroDeCelular) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

@@ -8,18 +8,18 @@ import java.util.List;
 public class SEM {
 	
 	private int precioPorHora;
-	private LocalTime inicioFranja;
-	private LocalTime finFranja;
+	private LocalDateTime inicioFranja;
+	private LocalDateTime finFranja;
 	private List<Estacionamiento> estacionamientos;
 	
-	public SEM(int precioPorHora, LocalTime inicioFranja, LocalTime finFranja, List<Estacionamiento> estacionamientos) {
+	public SEM(int precioPorHora, LocalDateTime inicioFranja, LocalDateTime finFranja, List<Estacionamiento> estacionamientos) {
 		this.precioPorHora = precioPorHora;
 		this.inicioFranja = inicioFranja;
 		this.finFranja = finFranja;
 		this.estacionamientos = estacionamientos;
 	}
 
-	public int precioHora() {
+	public int getPrecioHora() {
 		
 		return this.precioPorHora;
 	}
@@ -52,39 +52,41 @@ public class SEM {
 		
 	}
 	
-	public LocalTime getInicioFranja() {
+	public LocalDateTime getInicioFranja() {
 	
 		return this.inicioFranja;
 		
 	}
 	
-	public void setInicioFranja(LocalTime horaInicio) {
+	public void setInicioFranja(LocalDateTime horaInicio) {
 		
 		this.inicioFranja = horaInicio;	
 	}
 
-	public LocalTime getFinFranja() {
+	public LocalDateTime getFinFranja() {
 		
 		return this.finFranja;
 		
 	}
 	
-	public void setFinFranja(LocalTime horaFin) {
+	public void setFinFranja(LocalDateTime horaFin) {
 	
 		this.finFranja = horaFin;
 			
 	}
 
-	public boolean esVigente(String patente) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
 
 	public boolean esZonamedida(Zona ubicacionActual) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 	
-
+	public void finalizarTodosLosEstacionamientosVigentes() {
+		
+		this.getEstacionamientos().stream()
+								  .filter(estacionamiento -> estacionamiento.noEsVigente())
+								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
+	}	
+	
 }
