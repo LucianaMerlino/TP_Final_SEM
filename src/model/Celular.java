@@ -20,4 +20,9 @@ public class Celular {
 		return this.credito;
 	}
 
+	public void descontarCredito(int costoEstacionamiento) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
