@@ -1,16 +1,19 @@
 package model;
 
-//import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
+//import static org.mockito.Mockito.mock;
+//import static org.mockito.Mockito.verify;
+//import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+class AppEstacionamientoModosTest {
 
-class AppEstacionamientoTest {
-	AppEstacionamiento appEstacionamiento;
+	ModoManual modoManual;
 	SEM mockedSEM = mock(SEM.class);
 	Celular mockedCelular = mock(Celular.class);
 	int nroCelular = 0;
@@ -18,7 +21,7 @@ class AppEstacionamientoTest {
 	
 	@BeforeEach
 	void setUp() throws Exception {
-	appEstacionamiento = new AppEstacionamiento(mockedSEM, mockedCelular, patente);
+	modoManual = new ModoManual(mockedSEM, mockedCelular, patente);
 	when(mockedSEM.getPrecioHora()).thenReturn(1);
 	when(mockedSEM.getFinDeFranjaHoraria()).thenReturn(20);
 	}
@@ -28,7 +31,7 @@ class AppEstacionamientoTest {
 		when(mockedCelular.getCredito()).thenReturn(2);
 		int horaDeInicio = 11;
 		int horaFin = horaDeInicio + mockedCelular.getCredito();
-		assertEquals(appEstacionamiento.iniciarEstacionamiento(horaDeInicio),
+		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
 						"Hora estimada de fin de estacionamiento " + horaFin);
 	}
@@ -38,7 +41,7 @@ class AppEstacionamientoTest {
 		when(mockedCelular.getCredito()).thenReturn(50);
 		int horaDeInicio = 11;
 		int horaFin = mockedSEM.getFinDeFranjaHoraria();
-		assertEquals(appEstacionamiento.iniciarEstacionamiento(horaDeInicio),
+		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
 						"Hora estimada de fin de estacionamiento " + horaFin);
 	}
@@ -49,7 +52,7 @@ class AppEstacionamientoTest {
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCredito() {
 		when(mockedCelular.getCredito()).thenReturn(0);
 		int horaDeInicio = 11;
-		assertEquals(appEstacionamiento.iniciarEstacionamiento(horaDeInicio),
+		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Saldo insuficiente. Estacionamiento no permitido.");
 	}
 	
@@ -60,7 +63,7 @@ class AppEstacionamientoTest {
 		int duracion = 1;
 		int costo = 1;
 		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(11, 12));
-		assertEquals(appEstacionamiento.finalizarEstacionamiento(nroCelular),
+		assertEquals(modoManual.finalizarEstacionamiento(nroCelular),
 				"Hora comienzo de estacionamiento: " + horaInicio+ "\n"+
 				"Hora fin de estacionamiento: " + horaFin + "\n" +
 				"Duración del estacionamiento: " + duracion + "\n" +
@@ -72,15 +75,9 @@ class AppEstacionamientoTest {
 		int duracion = 1;
 		int costo = 1;
 		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(11, 12));
-		appEstacionamiento.finalizarEstacionamiento(nroCelular);
+		modoManual.finalizarEstacionamiento(nroCelular);
 		verify(mockedCelular).descontarCredito(duracion * costo);
 	}
  
-	@Test
-	void testConsultarSaldo() {
-		when(mockedCelular.getCredito()).thenReturn(5);
-		assertEquals(appEstacionamiento.saldoDisponible(), 5);
-		
-	}
 
 }
