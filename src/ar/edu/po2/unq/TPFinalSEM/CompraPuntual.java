@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 public class CompraPuntual extends Compra {
 	
-	private Double horas;
+	private int horas;
 	private String patente;
 	
-	public CompraPuntual(int nroControl, Double horas, String patente) {
+	public CompraPuntual(int nroControl, int horas, String patente) {
 		this.nroControl = nroControl;
 		this.fechaHora = LocalDateTime.now();
 		this.horas = horas;
@@ -26,7 +26,7 @@ public class CompraPuntual extends Compra {
 		return this.patente;
 	}
 
-	public Double getHoras() {
+	public int getHoras() {
 		
 		return this.horas;
 	}

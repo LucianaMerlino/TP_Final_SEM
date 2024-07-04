@@ -3,20 +3,22 @@ package ar.edu.po2.unq.TPFinalSEM;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SEM {
 	
 	private int precioPorHora;
-	private LocalDateTime inicioFranja;
-	private LocalDateTime finFranja;
+	private LocalTime inicioFranja;
+	private LocalTime finFranja;
 	private List<Estacionamiento> estacionamientos;
 	
-	public SEM(int precioPorHora, LocalDateTime inicioFranja, LocalDateTime finFranja, List<Estacionamiento> estacionamientos) {
+	public SEM(int precioPorHora, LocalTime inicioFranja, 
+			   LocalTime finFranja) {
 		this.precioPorHora = precioPorHora;
 		this.inicioFranja = inicioFranja;
 		this.finFranja = finFranja;
-		this.estacionamientos = estacionamientos;
+		this.estacionamientos = new ArrayList<Estacionamiento>();
 	}
 
 	public int getPrecioHora() {
@@ -24,27 +26,20 @@ public class SEM {
 		return this.precioPorHora;
 	}
 	
-	public void setPrecioHora(int precio) {
-		this.precioPorHora = precio;
-	}
-	
 	public List<Estacionamiento> getEstacionamientos() {
 		return this.estacionamientos;
 	}	
 	
 	
-	public void finalizarEstacionamientoViaApp(int numeroDeCelular) {
+	public void finalizarEstacionamientoViaApp(Celular celular) {
 	
-		LocalDate diaActual = LocalDate.now();
 		LocalTime horaActual = LocalTime.now();
-	
-		LocalDateTime fechaYHoraActual = LocalDateTime.of(diaActual, horaActual);
 		
 		this.getEstacionamientos().stream()
 								  .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
 								  .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
-								  .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == numeroDeCelular)
-								  .forEach(estacionamiento -> estacionamiento.setHoraFin(fechaYHoraActual));     																	
+								  .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == celular.getNumero())
+								  .forEach(estacionamiento -> estacionamiento.setHoraFin(horaActual));     																	
 	}
 
 	public void iniciarEstacionamientoViaApp(String patente, int nroCelular) {
@@ -52,24 +47,24 @@ public class SEM {
 		
 	}
 	
-	public LocalDateTime getInicioFranja() {
+	public LocalTime getInicioFranja() {
 	
 		return this.inicioFranja;
 		
 	}
 	
-	public void setInicioFranja(LocalDateTime horaInicio) {
+	public void setInicioFranja(LocalTime horaInicio) {
 		
 		this.inicioFranja = horaInicio;	
 	}
 
-	public LocalDateTime getFinFranja() {
+	public LocalTime getFinFranja() {
 		
 		return this.finFranja;
 		
 	}
 	
-	public void setFinFranja(LocalDateTime horaFin) {
+	public void setFinFranja(LocalTime horaFin) {
 	
 		this.finFranja = horaFin;
 			
@@ -85,8 +80,21 @@ public class SEM {
 	public void finalizarTodosLosEstacionamientosVigentes() {
 		
 		this.getEstacionamientos().stream()
-								  .filter(estacionamiento -> estacionamiento.noEsVigente())
+								  .filter(estacionamiento -> estacionamiento.esVigente())
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
 	}	
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

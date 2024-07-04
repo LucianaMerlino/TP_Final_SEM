@@ -5,11 +5,11 @@ import java.time.LocalTime;
 
 public abstract class Estacionamiento {
 	
-	protected LocalDateTime horaInicio;
-	protected LocalDateTime horaFin;
+	protected LocalTime horaInicio;
+	protected LocalTime horaFin;
 	protected String patente;
 	
-	public Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, 
+	public Estacionamiento(LocalTime horaInicio, LocalTime horaFin, 
 						   String patente) {
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
@@ -21,28 +21,31 @@ public abstract class Estacionamiento {
 		return this.patente;
 	}
 	
-	public LocalDateTime getHoraInicio() {
+	public LocalTime getHoraInicio() {
 		return this.horaInicio;
 	}
 	
-	public LocalDateTime getHoraFin() {
+	public LocalTime getHoraFin() {
 		return this.horaFin;
 	}
 	
-	public void setHoraFin(LocalDateTime hora) {
-		this.horaFin = hora;
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
 	}
 
 
 	public boolean noEsVigente() {
-		
-		LocalDate diaActual = LocalDate.now();
-		LocalTime horaActual = LocalTime.now();
 	
-		LocalDateTime fechaYHoraActual = LocalDateTime.of(diaActual, horaActual);
+		LocalTime horaActual = LocalTime.now();
 		
-		return this.getHoraFin().getHour() == fechaYHoraActual.getHour() ;
+		return this.getHoraFin().getHour() == horaActual.getHour() ;
 			
 	}
+	
+	public boolean esVigente() {
+		
+		return !this.noEsVigente();  
+	}	
+	
 
 }
