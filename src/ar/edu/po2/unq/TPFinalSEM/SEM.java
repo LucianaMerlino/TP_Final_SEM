@@ -38,12 +38,13 @@ public class SEM {
 		this.getEstacionamientos().stream()
 								  .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
 								  .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
-								  .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == celular.getNumero())
+								  .filter(estacionamiento -> estacionamiento.getCelular().getNumero() == celular.getNumero())
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(horaActual));     																	
 	}
 
-	public void iniciarEstacionamientoViaApp(String patente, int nroCelular) {
-		// TODO Auto-generated method stub
+	public void iniciarEstacionamientoViaApp(EstacionamientoViaApp estacionamientoViaApp) {
+	
+		this.estacionamientos.add(estacionamientoViaApp);
 		
 	}
 	
@@ -69,8 +70,6 @@ public class SEM {
 		this.finFranja = horaFin;
 			
 	}
-
-	
 
 	public boolean esZonamedida(Zona ubicacionActual) {
 		// TODO Auto-generated method stub

@@ -1,30 +1,22 @@
 package ar.edu.po2.unq.TPFinalSEM;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class EstacionamientoViaApp extends Estacionamiento {
 
-	private int numeroDeCelular;
+	private Celular celular;
 	
-	public EstacionamientoViaApp(LocalDateTime horaInicio, LocalDateTime horaFin, String patente) {
+	
+	public EstacionamientoViaApp(LocalTime horaInicio, LocalTime horaFin, 
+							     String patente, Celular celular) {
 		super(horaInicio, horaFin, patente);
+		
+		this.celular = celular;
 		
 	}
 	
-	public EstacionamientoViaApp(LocalDateTime horaInicio, LocalDateTime horaFin, String patente, int numeroDeCelular) {
-		super(horaInicio, horaFin, patente);
-		
-		this.numeroDeCelular = numeroDeCelular;
-		
-	}
-	
-	public int getNumeroDeCelular() {
-		return this.numeroDeCelular;
+	public Celular getCelular() {
+		return this.celular;
 	}
 
-	
-	
-	
 }
