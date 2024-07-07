@@ -1,26 +1,37 @@
 package model;
 
-
+import java.time.LocalTime;
 
 public class SEM {
 
-	public void iniciarEstacionamientoViaApp(int horaInicio, int horaFin, int numero, String patente) {
+	public void iniciarEstacionamientoViaApp(LocalTime horaInicio, String string, String patente) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public int getFinDeFranjaHoraria() {
+	public LocalTime getFinDeFranjaHoraria() {
 		// TODO Auto-generated method stub
-		return 0;
+		return null;
 	}
 
-	public int getPrecioHora() {
+	public Double getPrecioHora() {
 		// TODO Auto-generated method stub
-		return 0;
+		return 0.0;
 	}
 
-	public InfoEstacionamiento finalizarEstacionamientoViaApp(int nroCelular) {
-		return new InfoEstacionamiento(8,13);
+	public InfoEstacionamiento finalizarEstacionamientoViaApp(String nroCelular) {
+		
+		return new InfoEstacionamiento(null, null);
+	}
+
+	public boolean esVigente(String patente) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean esZonaMedida(String posicionUsuario) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 

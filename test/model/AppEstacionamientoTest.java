@@ -1,86 +1,102 @@
 package model;
 
 //import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.junit.jupiter.api.Test;
+import java.time.LocalTime;
+
 import org.junit.jupiter.api.BeforeEach;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
+import org.junit.jupiter.api.Test;
 
 class AppEstacionamientoTest {
+
 	AppEstacionamiento appEstacionamiento;
-	SEM mockedSEM = mock(SEM.class);
-	Celular mockedCelular = mock(Celular.class);
-	int nroCelular = 0;
-	String patente = "pat666";
+	SEM mockedSEM;
+	Celular mockedCelular;
+	String nroCelular;
+	String patente;
+	LocalTime finFranjaHoraria;
+	LocalTime horaDeInicio;
+	ModoEstacionamiento mockedModo;
+	EstadoDesplazamiento mockedEstado;
+	AsistenciaAlUsuario mockedAlerta;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-	appEstacionamiento = new AppEstacionamiento(mockedSEM, mockedCelular, patente);
-	when(mockedSEM.getPrecioHora()).thenReturn(1);
-	when(mockedSEM.getFinDeFranjaHoraria()).thenReturn(20);
+		mockedSEM = mock(SEM.class);
+		mockedCelular = mock(Celular.class);
+		nroCelular = "13-2256-5432";
+		patente = "pat666";
+		mockedModo = mock(ModoEstacionamiento.class);
+		mockedEstado = mock(EstadoDesplazamiento.class);
+		mockedAlerta = mock(AsistenciaAlUsuario.class);
+		appEstacionamiento = new AppEstacionamiento(mockedSEM, mockedCelular, patente, mockedModo);
+		finFranjaHoraria = LocalTime.of(20, 0, 0);
+		horaDeInicio = LocalTime.of(11, 0, 0);
+		when(mockedSEM.getPrecioHora()).thenReturn((double)1);
+		when(mockedSEM.getFinDeFranjaHoraria()).thenReturn(finFranjaHoraria);
 	}
 	
 	@Test
-	void testIniciarEstacionamientoCuandoNoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn(2);
-		int horaDeInicio = 11;
-		int horaFin = horaDeInicio + mockedCelular.getCredito();
-		assertEquals(appEstacionamiento.iniciarEstacionamiento(horaDeInicio),
-				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
-						"Hora estimada de fin de estacionamiento " + horaFin);
+	void testIniciarEstacionamiento() {
+		appEstacionamiento.iniciarEstacionamiento(horaDeInicio);
+		verify(mockedModo).iniciarEstacionamiento(horaDeInicio);
 	}
 	
 	@Test
-	void testIniciarEstacionamientoCuandoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn(50);
-		int horaDeInicio = 11;
-		int horaFin = mockedSEM.getFinDeFranjaHoraria();
-		assertEquals(appEstacionamiento.iniciarEstacionamiento(horaDeInicio),
-				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
-						"Hora estimada de fin de estacionamiento " + horaFin);
-	}
-	
-	
-	
-	@Test
-	void testIniciarEstacionamientoCuandoNoTieneSuficienteCredito() {
-		when(mockedCelular.getCredito()).thenReturn(0);
-		int horaDeInicio = 11;
-		assertEquals(appEstacionamiento.iniciarEstacionamiento(horaDeInicio),
-				"Saldo insuficiente. Estacionamiento no permitido.");
-	}
-	
-	@Test 
 	void testFinalizarEstacionamiento() {
-		int horaInicio= 11;
-		int horaFin = 12;
-		int duracion = 1;
-		int costo = 1;
-		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(11, 12));
-		assertEquals(appEstacionamiento.finalizarEstacionamiento(nroCelular),
-				"Hora comienzo de estacionamiento: " + horaInicio+ "\n"+
-				"Hora fin de estacionamiento: " + horaFin + "\n" +
-				"Duración del estacionamiento: " + duracion + "\n" +
-				"Costo total del estacionamiento: " + costo);
+		appEstacionamiento.finalizarEstacionamiento(patente);
+		verify(mockedModo).finalizarEstacionamiento(patente);
 	}
 	
-	@Test 
-	void testFinalizarEstacionamientoDebitoDeCredito() {
-		int duracion = 1;
-		int costo = 1;
-		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(11, 12));
-		appEstacionamiento.finalizarEstacionamiento(nroCelular);
-		verify(mockedCelular).descontarCredito(duracion * costo);
-	}
- 
+
 	@Test
-	void testConsultarSaldo() {
-		when(mockedCelular.getCredito()).thenReturn(5);
-		assertEquals(appEstacionamiento.saldoDisponible(), 5);
-		
+	void testSaldoDisponible() {
+		appEstacionamiento.saldoDisponible();
+		verify(mockedCelular).getCredito();
 	}
+	
+	@Test
+	void testWalking() {
+		appEstacionamiento.setEstadoDesplazamiento(mockedEstado);
+		appEstacionamiento.walking();
+		verify(mockedEstado).walking();
+	}
+	
+	@Test
+	void testDriving() {
+		appEstacionamiento.setEstadoDesplazamiento(mockedEstado);
+		appEstacionamiento.driving();
+		verify(mockedEstado).driving();
+	}
+
+	@Test
+	void testPosibleInicioEstacionamiento() {
+		String posicionUsuario = "x;y";
+		when((!(mockedSEM.esVigente(patente))) && (mockedSEM.esZonaMedida(posicionUsuario))).thenReturn(true);
+		appEstacionamiento.setAsistenciaAlUsuario(mockedAlerta);
+		appEstacionamiento.posibleInicioEstacionamiento(posicionUsuario);
+		verify(mockedModo).darInicio();
+		verify(mockedAlerta).alertaDeInicio();
+	}
+	
+	@Test
+	void testPosibleFinEstacionamiento() {
+		String posicionUsuario = "x;y";
+		when((!(mockedSEM.esVigente(patente))) && (mockedSEM.esZonaMedida(posicionUsuario))).thenReturn(true);
+		appEstacionamiento.setAsistenciaAlUsuario(mockedAlerta);
+		appEstacionamiento.posibleInicioEstacionamiento(posicionUsuario);
+		appEstacionamiento.posibleInicioEstacionamiento(posicionUsuario);
+		when(mockedSEM.esVigente(patente)).thenReturn(true);
+		appEstacionamiento.setModo(mockedModo);
+		appEstacionamiento.posibleFinEstacionamiento(posicionUsuario);
+		verify(mockedModo).darFin();
+		verify(mockedAlerta).alertaDeFin();
+	}
+	
+	
+
 
 }

@@ -2,25 +2,25 @@ package model;
 
 public class Celular {
 	
-	private int numero;
-	private int credito;
+	private String numero;
+	private long credito;
 	
-	public Celular(int numero) {
+	public Celular(String numero) {
 		
 		this.numero = numero;
-		this.credito = 0;
+		this.credito = (long) 0;
 	}
 
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public int getCredito() {
+	public long getCredito() {
 		// TODO Auto-generated method stub
 		return this.credito;
 	}
 
-	public void descontarCredito(int costoEstacionamiento) {
+	public void descontarCredito(double costoEstacionamiento) {
 		// TODO Auto-generated method stub
 		
 	}

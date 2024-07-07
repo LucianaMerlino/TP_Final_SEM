@@ -1,24 +1,27 @@
 package model;
 
+
+import java.time.LocalTime;
+
 public class InfoEstacionamiento {
 	
-	private int hInicio;
-	private int hFin;
+	private LocalTime hInicio;
+	private LocalTime hFin;
 	
-	public InfoEstacionamiento(int horaInicio, int horaFin) {
+	public InfoEstacionamiento(LocalTime horaInicio, LocalTime horaFin) {
 		hInicio = horaInicio;
 		hFin = horaFin;
 	}
 
-	public int gethInicio() {
+	public LocalTime gethInicio() {
 		return hInicio;
 	}
 
-	public int gethFin() {
+	public LocalTime gethFin() {
 		return hFin;
 	}
 	
-	public int duracion() {
-		return hFin - hInicio;
+	public Double duracion() {
+		return (double) (hFin.getHour() -  hInicio.getHour());
 	}
 }

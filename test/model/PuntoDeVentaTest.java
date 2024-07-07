@@ -15,7 +15,7 @@ class PuntoDeVentaTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		this.celular = new Celular(12345678);
+	//	this.celular = new Celular(12345678);
 
 		puntoDeVenta = new PuntoDeVenta();
 		

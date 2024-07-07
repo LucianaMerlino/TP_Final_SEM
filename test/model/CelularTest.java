@@ -12,7 +12,7 @@ class CelularTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		this.celular = new Celular(12345678);
+	//	this.celular = new Celular(12345678);
 		
 	}
 

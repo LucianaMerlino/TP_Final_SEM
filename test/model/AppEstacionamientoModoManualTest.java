@@ -11,26 +11,35 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class AppEstacionamientoModosTest {
+import java.time.LocalTime;
 
-	ModoManual modoManual;
-	SEM mockedSEM = mock(SEM.class);
-	Celular mockedCelular = mock(Celular.class);
-	int nroCelular = 0;
-	String patente = "pat666";
+class AppEstacionamientoModoManualTest {
+
+		ModoManual modoManual;
+		SEM mockedSEM;
+		Celular mockedCelular;
+		String nroCelular;
+		String patente;
+		LocalTime finFranjaHoraria;
+		LocalTime horaDeInicio;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-	modoManual = new ModoManual(mockedSEM, mockedCelular, patente);
-	when(mockedSEM.getPrecioHora()).thenReturn(1);
-	when(mockedSEM.getFinDeFranjaHoraria()).thenReturn(20);
+		mockedSEM = mock(SEM.class);
+		mockedCelular = mock(Celular.class);
+		nroCelular = "1233444";
+		patente = "pat666";
+		modoManual = new ModoManual(mockedSEM, mockedCelular, patente);
+		finFranjaHoraria = LocalTime.of(20, 0, 0);
+		horaDeInicio = LocalTime.of(11, 0, 0);
+		when(mockedSEM.getPrecioHora()).thenReturn(1.0);
+		when(mockedSEM.getFinDeFranjaHoraria()).thenReturn(finFranjaHoraria);
 	}
 	
 	@Test
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn(2);
-		int horaDeInicio = 11;
-		int horaFin = horaDeInicio + mockedCelular.getCredito();
+		when(mockedCelular.getCredito()).thenReturn((long) 2);
+		LocalTime horaFin = horaDeInicio.plusHours(mockedCelular.getCredito());
 		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
 						"Hora estimada de fin de estacionamiento " + horaFin);
@@ -38,33 +47,29 @@ class AppEstacionamientoModosTest {
 	
 	@Test
 	void testIniciarEstacionamientoCuandoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn(50);
-		int horaDeInicio = 11;
-		int horaFin = mockedSEM.getFinDeFranjaHoraria();
+		when(mockedCelular.getCredito()).thenReturn((long) 10);
 		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
-						"Hora estimada de fin de estacionamiento " + horaFin);
+						"Hora estimada de fin de estacionamiento " + finFranjaHoraria);
 	}
 	
 	
-	
+
 	@Test
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCredito() {
-		when(mockedCelular.getCredito()).thenReturn(0);
-		int horaDeInicio = 11;
+		when(mockedCelular.getCredito()).thenReturn((long) 0);
 		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Saldo insuficiente. Estacionamiento no permitido.");
 	}
 	
 	@Test 
 	void testFinalizarEstacionamiento() {
-		int horaInicio= 11;
-		int horaFin = 12;
-		int duracion = 1;
-		int costo = 1;
-		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(11, 12));
+		LocalTime horaFin = LocalTime.of(12, 0, 0);
+		double duracion = 1;
+		double costo = 1;
+		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(LocalTime.of(11, 0, 0), LocalTime.of(12, 0, 0)));
 		assertEquals(modoManual.finalizarEstacionamiento(nroCelular),
-				"Hora comienzo de estacionamiento: " + horaInicio+ "\n"+
+				"Hora comienzo de estacionamiento: " + horaDeInicio+ "\n"+
 				"Hora fin de estacionamiento: " + horaFin + "\n" +
 				"Duración del estacionamiento: " + duracion + "\n" +
 				"Costo total del estacionamiento: " + costo);
@@ -74,7 +79,7 @@ class AppEstacionamientoModosTest {
 	void testFinalizarEstacionamientoDebitoDeCredito() {
 		int duracion = 1;
 		int costo = 1;
-		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(11, 12));
+		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(LocalTime.of(11, 0, 0), LocalTime.of(12, 0, 0)));
 		modoManual.finalizarEstacionamiento(nroCelular);
 		verify(mockedCelular).descontarCredito(duracion * costo);
 	}
