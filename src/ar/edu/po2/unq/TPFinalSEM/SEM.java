@@ -71,13 +71,11 @@ public class SEM {
 	}
 	
 	
-	public void iniciarEstacionamientoViaCompra(CompraPuntual compraPuntual, 
-												LocalTime horaInicio, 
-												LocalTime horaFin) {
+	public void iniciarEstacionamientoViaCompra(CompraPuntual compraPuntual) {
 												
 		this.estacionamientos.add(new EstacionamientoViaCompra(compraPuntual, 
-															   horaInicio,
-															   horaFin,
+															   compraPuntual.getHora(),
+															   compraPuntual.getHora(),
 															   compraPuntual.getPatente()));
 	} // testear
 	
@@ -85,7 +83,7 @@ public class SEM {
 	
 		this.estacionamientos.add(estacionamientoViaApp);
 		
-	} // testear
+	} // testeado
 	
 	public void recargarCredito(RecargaCredito recarga) {
 		/**
@@ -119,6 +117,8 @@ public class SEM {
 	public void finalizarEstacionamientoViaApp(Celular celular) {
 	
 		LocalTime horaActual = LocalTime.now();
+		
+		//LocalTime horaFin = LocalTime.of(20, 0);
 		
 		this.getEstacionamientos().stream()
 								  .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)

@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,19 +39,11 @@ class SEMTest {
 	LocalTime horaInicioTercerEstacionamiento;
 	LocalTime horaFinTercerEstacionamiento;
 	
-	
 	LocalTime horaInicioCompraPuntual;
-	LocalDate diaInicioCompraPuntual;
-	LocalDateTime diaYfechaEstacionamientoPorCompra;
 	
 	LocalTime horaFinCompraPuntual;
-	LocalDate diaFinCompraPuntual;
-	LocalDateTime diaYfechaFinEstacionamientoPorCompra;
 	
 	LocalDate diaInicioYFinFranjaDelSem;
-	
-	LocalDateTime diaYhoraInicioFranjaSem;
-	LocalDateTime diaYhoraFinFranjaSem;
 	
 	EstacionamientoViaApp primerEstacionamientoViaApp;
 	EstacionamientoViaApp segundoEstacionamientoViaApp;
@@ -128,10 +118,6 @@ class SEMTest {
 	sem.iniciarEstacionamientoViaApp(segundoEstacionamientoViaApp);
 	sem.iniciarEstacionamientoViaApp(tercerEstacionamientoViaApp);
 	
-	sem.iniciarEstacionamientoViaCompra(compraPuntual, 
-										horaInicioCompraPuntual,
-										horaFinCompraPuntual);
-	
 	
 	when(celularPrimerCliente.getNumero()).thenReturn(12345);
 	when(celularPrimerCliente.getCredito()).thenReturn(100.0);
@@ -155,8 +141,8 @@ class SEMTest {
 		 * */
 		
 		List<EstacionamientoViaApp> estacionamientosViaAppFiltrados = sem.getEstacionamientos().stream()
-															   			 .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
-								  							   			 .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
+																		 .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
+																		 .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
 								  							   			 .collect(Collectors.toList());
 		// este metodo ni siquiera filtra y se queda con los estacionamientos de tipo via app
 		
@@ -168,7 +154,7 @@ class SEMTest {
 		assertTrue(estacionamientoFinalizado.noEsVigente());
 		
 	}
-	/*
+	
 	
 	@Test
 	void finalizarTodosLosEstacionamientosVigentesTest() {
@@ -180,20 +166,6 @@ class SEMTest {
 		
 		assertTrue(estanLosEstacionamientosFinalizados);
 	}
-	
-	@Test
-	void iniciarEstacionamientoViaCompraTest() {
-	
-		sem.iniciarEstacionamientoViaCompra(compraPuntual, 
-											horaInicioCompraPuntual,
-											horaFinCompraPuntual);
-		
-		boolean existeUnEstacionamientoViaCompra = sem.getEstacionamientos().stream()
-																	  		 .anyMatch(estacionamiento -> estacionamiento instanceof EstacionamientoViaCompra);
-	
-		assertTrue(existeUnEstacionamientoViaCompra);
-	
-	}*/
 	
 	
 

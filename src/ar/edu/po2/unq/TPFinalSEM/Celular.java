@@ -19,7 +19,7 @@ public class Celular {
 	}
 	 
 	public void setCredito(Double credito) {
-	 	this.credito = credito;
+	 	this.credito += credito;
 	}
 
 	public void consumirCredito(int costoTotal) {

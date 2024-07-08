@@ -23,6 +23,16 @@ public class RecargaCredito extends Compra {
 		
 		return this.monto;
 	}
+	
+	public Celular getCelular() {
 		
+		return this.celular;
+	}
+	
+	public void cargarCreditoEnCelular(Double monto) {
+	
+		this.getCelular().setCredito(monto);
+	
+	}	
 
 }

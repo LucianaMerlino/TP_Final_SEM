@@ -15,6 +15,8 @@ public class CompraPuntual extends Compra {
 		this.patente = patente;
 		
 	}
+	
+	// es la hora actual
 
 	public LocalTime getHora() {
 		
@@ -26,7 +28,8 @@ public class CompraPuntual extends Compra {
 		
 		return this.patente;
 	}
-
+	
+	// son las horas compradas por el cliente
 	public int getHoras() {
 		
 		return this.horas;
