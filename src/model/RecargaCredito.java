@@ -7,13 +7,10 @@ public class RecargaCredito extends Compra {
 	private Double monto;
 	private Celular celular;
 	
-	public RecargaCredito(int nroControl, Double monto, Celular celular) {
-		
-		this.nroControl = nroControl;
-		this.fechaHora = LocalDateTime.now();
+	public RecargaCredito(int nroControl, PuntoDeVenta puntoDeVenta, Double monto, Celular celular) {
+		super(nroControl, puntoDeVenta, LocalDateTime.now());
 		this.monto = monto;
 		this.celular = celular;
-		
 	}
 
 }
