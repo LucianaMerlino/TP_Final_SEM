@@ -1,6 +1,7 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,13 +10,13 @@ class PuntoDeVentaTest {
 	
 	private CompraPuntual compraPuntual;
 	private RecargaCredito recargaCredito;
-	private Celular celular;
+	private Celular celularMocked;
 	private PuntoDeVenta puntoDeVenta;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		
-		this.celular = new Celular(12345678);
+		celularMocked = mock(Celular.class);
 
 		puntoDeVenta = new PuntoDeVenta();
 		
@@ -27,14 +28,14 @@ class PuntoDeVentaTest {
 	}
 	
 	@Test
-	void testcrearCompraPuntual() {
-		this.compraPuntual = puntoDeVenta.crearCompraPuntual(1, 2.0, "AAA");
+	void testCrearCompraPuntual() {
+		this.compraPuntual = puntoDeVenta.crearCompraPuntual(1, 2, "AAA");
 		assertNotNull(compraPuntual);
 	}
 	
 	@Test
 	void testCrearRecargaCredito() {
-		this.recargaCredito = puntoDeVenta.crearRecargaCredito(1, 2000.00, celular);
+		this.recargaCredito = puntoDeVenta.crearRecargaCredito(1, 2000.00, celularMocked);
 		assertNotNull(recargaCredito);
 	}
 
