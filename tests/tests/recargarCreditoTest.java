@@ -36,9 +36,9 @@ class recargarCreditoTest {
 		
 	sem = new SEM(precioPorHora, inicioFranja, finFranja);
 	
-	primerCelular = mock(Celular.class);
-	segundoCelular = mock(Celular.class);
-	tercerCelular = mock(Celular.class);
+	primerCelular = new Celular(111, 0.0);
+	segundoCelular = new Celular(222, 400.0);
+	tercerCelular = new Celular(333, 500.0);
 	
 	sem.registrarCelular(primerCelular);
 	sem.registrarCelular(segundoCelular);
@@ -52,8 +52,9 @@ class recargarCreditoTest {
 	void test() {
 		sem.recargarCredito(recarga);
 		
-		assertEquals(sem.getCelulares().stream().findFirst().get().getCredito(), 
-					 500.0);
+		Double saldoCargado = sem.getCelulares().stream().findFirst().get().getCredito();
+		
+		assertEquals(saldoCargado, 500.0);
 	}
 
 }

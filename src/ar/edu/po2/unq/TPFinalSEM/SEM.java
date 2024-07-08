@@ -76,6 +76,15 @@ public class SEM {
 		
 	}
 	
+	public List<Infraccion> getInfracciones() {
+		return this.infracciones;
+	}
+	
+	public void registrarZona(Zona zona) {
+		this.zonas.add(zona);
+	}
+	
+	
 	
 	public void iniciarEstacionamientoViaCompra(CompraPuntual compraPuntual) {
 												
@@ -99,12 +108,12 @@ public class SEM {
 		 
 		 this.getCelulares().stream()
 		 					.forEach(celular -> celular.setCredito(recarga.getMonto()));
-	} // testear
+	} // testeado
 	
 	public void registrarInfraccion(Infraccion infraccion) {
 		
 		this.infracciones.add(infraccion);
-	} // testear
+	} // testeado
 	
 	public PuntoDeVenta encontrarPuntoBuscadoEnLasZonas(PuntoDeVenta punto) {
 		/**
