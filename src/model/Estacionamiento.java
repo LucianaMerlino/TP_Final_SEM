@@ -4,13 +4,30 @@ import java.time.LocalDateTime;
 
 public abstract class Estacionamiento {
 	
-	protected LocalDateTime horaInicio;
-	protected LocalDateTime horaFin;
-	protected String patente;
+	private LocalDateTime horaInicio;
+	private LocalDateTime horaFin;
+	private String patente;
 	
-	public String getPatente() {
+	public Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, String patente) {
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
+		this.patente = patente;
+	}
 
-		return this.patente;
+	public LocalDateTime getHoraInicio() {
+		return horaInicio;
+	}
+	
+	public LocalDateTime getHoraFin() {
+		return horaFin;
+	}
+
+	public String getPatente() {
+		return patente;
+	}
+
+	public Boolean estaVigente() {
+		return (this.horaFin.isBefore(LocalDateTime.now()) || this.getHoraFin() == null);
 	}
 
 }
