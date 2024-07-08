@@ -1,6 +1,7 @@
 package ar.edu.po2.unq.TPFinalSEM;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class CompraPuntual extends Compra {
 	
@@ -9,15 +10,15 @@ public class CompraPuntual extends Compra {
 	
 	public CompraPuntual(int nroControl, int horas, String patente) {
 		this.nroControl = nroControl;
-		this.fechaHora = LocalDateTime.now();
+		this.hora = LocalTime.now();
 		this.horas = horas;
 		this.patente = patente;
 		
 	}
 
-	public LocalDateTime getFechaHora() {
+	public LocalTime getHora() {
 		
-		return this.fechaHora;
+		return this.hora;
 		
 	}
 

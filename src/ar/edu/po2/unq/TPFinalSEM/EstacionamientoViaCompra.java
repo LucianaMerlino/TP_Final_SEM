@@ -1,18 +1,19 @@
 package ar.edu.po2.unq.TPFinalSEM;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.Period;
 
 public class EstacionamientoViaCompra extends Estacionamiento {
 	
 	private CompraPuntual compraPuntual;
 	
-	public EstacionamientoViaCompra(CompraPuntual compraPuntual, LocalDateTime horaInicio,
-									LocalDateTime horaFin, String patente) {
+	public EstacionamientoViaCompra(CompraPuntual compraPuntual, LocalTime horaInicio,
+									LocalTime horaFin, String patente) {
 	super(horaInicio, horaFin, patente);
 		
 		this.compraPuntual = compraPuntual;
-		this.horaInicio = compraPuntual.getFechaHora();
+		this.horaInicio = compraPuntual.getHora();
 		this.horaFin = this.horaInicio.plusMinutes((long) (compraPuntual.getHoras()/60));
 		this.patente = compraPuntual.getPatente();
 		

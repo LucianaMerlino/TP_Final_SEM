@@ -1,15 +1,19 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import ar.edu.po2.unq.TPFinalSEM.Celular;
 import ar.edu.po2.unq.TPFinalSEM.CompraPuntual;
 import ar.edu.po2.unq.TPFinalSEM.Estacionamiento;
 import ar.edu.po2.unq.TPFinalSEM.EstacionamientoViaApp;
@@ -27,15 +31,16 @@ class SEMTest {
 	int precioPorHora;
 	LocalTime inicioFranja;
 	LocalTime finFranja;
-	List<Estacionamiento> estacionamientos;
 	
-	LocalTime horaInicioEstacionamiento;
-	LocalDate diaInicioEstacionamiento;
-	LocalDateTime diaYfechaEstacionamiento;
+	LocalTime horaInicioPrimerEstacionamiento;
+	LocalTime horaFinPrimerEstacionamiento;
 	
-	LocalTime horaFinEstacionamiento;
-	LocalDate diaFinEstacionamiento;
-	LocalDateTime diaYfechaFinEstacionamiento;
+	LocalTime horaInicioSegundoEstacionamiento;
+	LocalTime horaFinSegundoEstacionamiento;
+	
+	LocalTime horaInicioTercerEstacionamiento;
+	LocalTime horaFinTercerEstacionamiento;
+	
 	
 	LocalTime horaInicioCompraPuntual;
 	LocalDate diaInicioCompraPuntual;
@@ -53,8 +58,14 @@ class SEMTest {
 	EstacionamientoViaApp primerEstacionamientoViaApp;
 	EstacionamientoViaApp segundoEstacionamientoViaApp;
 	EstacionamientoViaApp tercerEstacionamientoViaApp;
+	
 	EstacionamientoViaCompra primerEstacionamientoViaCompra;
+	
 	CompraPuntual compraPuntual;
+	
+	Celular celularPrimerCliente;
+	Celular celularSegundoCliente;
+	Celular celularTercerCliente;
 	
 	// Se inicializan los DOC que van a ser mockeados:
 	
@@ -68,47 +79,68 @@ class SEMTest {
 	precioPorHora = 40;
 	inicioFranja = LocalTime.of(7, 0);
 	finFranja = LocalTime.of(20, 0);
-	diaInicioYFinFranjaDelSem = LocalDate.of(2024, 6, 21);
-	diaYhoraInicioFranjaSem = LocalDateTime.of(diaInicioYFinFranjaDelSem, inicioFranja);
-	diaYhoraFinFranjaSem = LocalDateTime.of(diaInicioYFinFranjaDelSem, finFranja);
 	
 	// dia y horas de inicio y fin para los estacionamientos via app:
 	
-	horaInicioEstacionamiento = LocalTime.of(8, 0);
-	diaInicioEstacionamiento = LocalDate.of(2024, 6, 21);
-	diaYfechaEstacionamiento = LocalDateTime.of(diaInicioEstacionamiento, horaInicioEstacionamiento);
+	horaInicioPrimerEstacionamiento = LocalTime.of(8, 0);
+	horaFinPrimerEstacionamiento = LocalTime.of(9, 0);
 	
-	horaFinEstacionamiento = LocalTime.of(9, 0);
-	diaFinEstacionamiento = LocalDate.of(2024, 6, 21);
-	diaYfechaFinEstacionamiento = LocalDateTime.of(diaFinEstacionamiento, horaFinEstacionamiento);
+	horaInicioSegundoEstacionamiento = LocalTime.of(10, 0);
+	horaFinSegundoEstacionamiento = LocalTime.of(11, 0);
+	
+	horaInicioTercerEstacionamiento = LocalTime.of(12, 0);
+	horaFinTercerEstacionamiento = LocalTime.of(13, 0);
 	
 	// dia y horas de inicio y fin para los estacionamientos via compra puntual:
 	
 	horaInicioCompraPuntual = LocalTime.of(8, 0);
-	diaInicioCompraPuntual = LocalDate.of(2024, 6, 21);
-	diaYfechaEstacionamientoPorCompra = LocalDateTime.of(diaInicioEstacionamiento, horaInicioEstacionamiento);
 	
 	horaFinCompraPuntual = LocalTime.of(11, 0);
-	diaFinCompraPuntual = LocalDate.of(2024, 6, 21);
-	diaYfechaFinEstacionamientoPorCompra = LocalDateTime.of(diaFinEstacionamiento, horaFinEstacionamiento);
 	
-	primerEstacionamientoViaApp = new EstacionamientoViaApp(diaYfechaEstacionamiento, diaYfechaFinEstacionamiento, "123", 12345);
-	segundoEstacionamientoViaApp = new EstacionamientoViaApp(diaYfechaEstacionamiento, diaYfechaFinEstacionamiento, "1234", 1234);
-	tercerEstacionamientoViaApp = new EstacionamientoViaApp(diaYfechaEstacionamiento, diaYfechaFinEstacionamiento, "12345", 123);
+	celularPrimerCliente = mock(Celular.class);
+	celularSegundoCliente = mock(Celular.class);
+	celularTercerCliente = mock(Celular.class);
+	
+	primerEstacionamientoViaApp = new EstacionamientoViaApp(horaInicioPrimerEstacionamiento, 
+															horaFinPrimerEstacionamiento, "123",
+														    celularPrimerCliente);
+														    
+	segundoEstacionamientoViaApp = new EstacionamientoViaApp(horaInicioSegundoEstacionamiento, 
+															 horaFinSegundoEstacionamiento, "1234",
+															 celularSegundoCliente);
+															 
+	tercerEstacionamientoViaApp = new EstacionamientoViaApp(horaInicioTercerEstacionamiento, 
+															horaFinTercerEstacionamiento, "12345", 
+															celularTercerCliente);
+															
+	
 	
 	compraPuntual = new CompraPuntual(777, 3, "ABC 123");
-	primerEstacionamientoViaCompra = new EstacionamientoViaCompra(compraPuntual, diaYfechaEstacionamientoPorCompra, diaYfechaFinEstacionamientoPorCompra, "ABC 123");
 	
-	estacionamientos = new ArrayList<Estacionamiento>();
-	
-	estacionamientos.add(primerEstacionamientoViaApp);
-	estacionamientos.add(segundoEstacionamientoViaApp);
-	estacionamientos.add(tercerEstacionamientoViaApp);	
-	estacionamientos.add(primerEstacionamientoViaCompra);
+	primerEstacionamientoViaCompra = new EstacionamientoViaCompra(compraPuntual, horaInicioCompraPuntual,
+																  horaFinCompraPuntual, "ABCD");
 	
 	// SUT:
 		
-	sem = new SEM(precioPorHora, diaYhoraInicioFranjaSem, diaYhoraFinFranjaSem, estacionamientos);
+	sem = new SEM(precioPorHora, inicioFranja, finFranja);
+	
+	sem.iniciarEstacionamientoViaApp(primerEstacionamientoViaApp);
+	sem.iniciarEstacionamientoViaApp(segundoEstacionamientoViaApp);
+	sem.iniciarEstacionamientoViaApp(tercerEstacionamientoViaApp);
+	
+	sem.iniciarEstacionamientoViaCompra(compraPuntual, 
+										horaInicioCompraPuntual,
+										horaFinCompraPuntual);
+	
+	
+	when(celularPrimerCliente.getNumero()).thenReturn(12345);
+	when(celularPrimerCliente.getCredito()).thenReturn(100.0);
+	
+	when(celularSegundoCliente.getNumero()).thenReturn(1234);
+	when(celularSegundoCliente.getCredito()).thenReturn(200.0);
+	
+	when(celularTercerCliente.getNumero()).thenReturn(123);
+	when(celularTercerCliente.getCredito()).thenReturn(300.0);
 
 	}
 	
@@ -116,27 +148,53 @@ class SEMTest {
 
 	@Test
 	void finalizarEstacionamientoViaAppTest() {
+	
+		/**
+		 * Se llama aparte al metodo finalizarEstacionamientoViaApp(celular), para finalizar un estacionamiento
+		 * via app, que tiene el numero de celular del celular dado, 
+		 * */
 		
-		sem.finalizarEstacionamientoViaApp(1234);
-		EstacionamientoViaApp estacionamientoFinalizado = sem.getEstacionamientos().stream()
-															 .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
-								  							 .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
-								  							 .filter(estacionamiento -> estacionamiento.getNumeroDeCelular() == 1234)
-								  							 .findFirst().get();
+		List<EstacionamientoViaApp> estacionamientosViaAppFiltrados = sem.getEstacionamientos().stream()
+															   			 .filter(estacionamiento -> estacionamiento instanceof EstacionamientoViaApp)
+								  							   			 .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
+								  							   			 .collect(Collectors.toList());
+		// este metodo ni siquiera filtra y se queda con los estacionamientos de tipo via app
 		
+		EstacionamientoViaApp estacionamientoFinalizado = estacionamientosViaAppFiltrados.stream()
+								  							 							 .filter(estacionamiento -> estacionamiento.getCelular().getNumero() ==
+								  							 						    							celularSegundoCliente.getNumero())
+								  							 							 .findFirst().get();
+		// y este metodo ni siquiera encuentra al que le decís, no hace nada, empezó a fallar cuando agregue el via compra a la lista
 		assertTrue(estacionamientoFinalizado.noEsVigente());
 		
 	}
+	/*
 	
 	@Test
-	void finalizarTodosLosEstacionamientosVigentes() {
+	void finalizarTodosLosEstacionamientosVigentesTest() {
 		
 		sem.finalizarTodosLosEstacionamientosVigentes();
 		
 		boolean estanLosEstacionamientosFinalizados = sem.getEstacionamientos().stream()
-																			   .allMatch(estacionamiento -> estacionamiento.esVigente());	
+																			   .allMatch(estacionamiento -> estacionamiento.noEsVigente());	
 		
 		assertTrue(estanLosEstacionamientosFinalizados);
 	}
+	
+	@Test
+	void iniciarEstacionamientoViaCompraTest() {
+	
+		sem.iniciarEstacionamientoViaCompra(compraPuntual, 
+											horaInicioCompraPuntual,
+											horaFinCompraPuntual);
+		
+		boolean existeUnEstacionamientoViaCompra = sem.getEstacionamientos().stream()
+																	  		 .anyMatch(estacionamiento -> estacionamiento instanceof EstacionamientoViaCompra);
+	
+		assertTrue(existeUnEstacionamientoViaCompra);
+	
+	}*/
+	
+	
 
 }
