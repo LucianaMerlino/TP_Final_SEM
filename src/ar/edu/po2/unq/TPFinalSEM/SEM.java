@@ -70,6 +70,12 @@ public class SEM {
 			
 	}
 	
+	public void registrarCelular(Celular celular) {
+		
+		this.celulares.add(celular);
+		
+	}
+	
 	
 	public void iniciarEstacionamientoViaCompra(CompraPuntual compraPuntual) {
 												
