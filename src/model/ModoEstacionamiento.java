@@ -69,4 +69,6 @@ public abstract class ModoEstacionamiento {
 
 	protected abstract void darFin();
 
+	protected abstract void configurarApp(AppEstacionamiento appEstacionamiento);
+
 }

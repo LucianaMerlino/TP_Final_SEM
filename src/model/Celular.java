@@ -4,6 +4,7 @@ public class Celular {
 	
 	private String numero;
 	private long credito;
+	private GPS gps;
 	
 	public Celular(String numero) {
 		
@@ -23,6 +24,10 @@ public class Celular {
 	public void descontarCredito(double costoEstacionamiento) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public GPS getGps() {
+		return gps;
 	}
 
 }

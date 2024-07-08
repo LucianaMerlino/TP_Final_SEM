@@ -4,12 +4,16 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import static org.mockito.Mockito.*;
 
 class EstadoDesplazamientoTest {
 		AppEstacionamiento mockedApp;
 		EstadoDesplazamiento estado;
 		GPS mockedGps;
+		ModoManual mockedModo;
+		SEM mockedSem;
+		Celular mockedCelular;
 	
 	@BeforeEach
 	void setUp() throws Exception{
@@ -49,6 +53,20 @@ class EstadoDesplazamientoTest {
 		estado.driving();
 		verify(mockedApp).setEstadoDesplazamiento(any(EstadoDriving.class));
 		verify(mockedApp).posibleFinEstacionamiento(ubicacion);
+	}
+	
+	@Test
+	void testEstadoDesactivado() {
+		mockedSem = mock(SEM.class);
+		when(mockedApp.getSEM()).thenReturn(mockedSem);
+		mockedCelular = mock(Celular.class);
+		when(mockedApp.getCelular()).thenReturn(mockedCelular);
+		String patente = "ad";
+		when(mockedApp.getPatente()).thenReturn(patente);
+		estado = new EstadoDesactivado(mockedApp, mockedGps);
+		verify(mockedApp).setModo(any (ModoManual.class));
+		verify(mockedApp).setAsistenciaAlUsuario(any(AlertaDesactivada.class));
+		
 	}
 	
 

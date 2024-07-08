@@ -6,4 +6,6 @@ public abstract class AsistenciaAlUsuario {
 
 	public abstract String alertaDeFin();
 
+	protected abstract void configurarApp(AppEstacionamiento appEstacionamiento);
+
 }

@@ -7,6 +7,7 @@ public class ModoAutomatico extends ModoEstacionamiento {
 
 	public ModoAutomatico(SEM sem, Celular celular, String patente) {
 		super(sem, celular, patente);
+		
 	}
 
 
@@ -38,6 +39,14 @@ public class ModoAutomatico extends ModoEstacionamiento {
 	@Override
 	protected void darFin() {
 		super.finalizarEstacionamiento(super.getCelular().getNumero());
+	}
+
+
+	//Testear
+	@Override
+	protected void configurarApp(AppEstacionamiento appEstacionamiento) {
+		appEstacionamiento.setEstadoDesplazamiento(new EstadoActivado(appEstacionamiento, appEstacionamiento.getCelular().getGps()));
+		appEstacionamiento.setAsistenciaAlUsuario(new AlertaDesactivada());
 	}
 
 }

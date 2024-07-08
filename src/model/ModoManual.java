@@ -33,6 +33,11 @@ public class ModoManual extends ModoEstacionamiento{
 		
 	}
 
+	@Override
+	protected void configurarApp(AppEstacionamiento appEstacionamiento) {
+		
+	}
+
 
 
 

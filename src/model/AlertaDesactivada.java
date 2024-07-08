@@ -13,4 +13,10 @@ public class AlertaDesactivada extends AsistenciaAlUsuario{
 		return null;	
 	}
 
+	@Override
+	protected void configurarApp(AppEstacionamiento appEstacionamiento) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

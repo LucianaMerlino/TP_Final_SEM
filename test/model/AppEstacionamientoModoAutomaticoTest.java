@@ -1,6 +1,7 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -19,6 +20,7 @@ class AppEstacionamientoModoAutomaticoTest {
 	String patente;
 	LocalTime finFranjaHoraria;
 	LocalTime horaDeInicio;
+	AppEstacionamiento mockedApp;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -77,6 +79,19 @@ class AppEstacionamientoModoAutomaticoTest {
 		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(LocalTime.of(11, 0, 0), LocalTime.of(12, 0, 0)));
 		modoAutomatico.finalizarEstacionamiento(nroCelular);
 		verify(mockedCelular).descontarCredito(duracion * costo);
+	}
+	
+	@Test
+	void testConfigurarApp() {
+		mockedApp = mock(AppEstacionamiento.class);
+		GPS mockedGPS = mock(GPS.class);
+		when(mockedApp.getCelular()).thenReturn(mockedCelular);
+		when(mockedCelular.getGps()).thenReturn(mockedGPS);
+		modoAutomatico.configurarApp(mockedApp);
+		verify(mockedApp).setEstadoDesplazamiento(any(EstadoActivado.class));
+		verify(mockedApp).setAsistenciaAlUsuario(any(AlertaDesactivada.class));
+
+		
 	}
 
 }

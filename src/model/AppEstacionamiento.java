@@ -13,6 +13,11 @@ public class AppEstacionamiento {
 	
 	public void setModo(ModoEstacionamiento modoEstacionamiento) {
 		modo =  modoEstacionamiento;
+		modo.configurarApp(this);
+	}
+	
+	public Celular getCelular() {
+		return celular;
 	}
 	
 	public AppEstacionamiento(SEM s, Celular c, String patente, ModoEstacionamiento modo) {
@@ -73,6 +78,15 @@ public class AppEstacionamiento {
 	
 	public void setAsistenciaAlUsuario(AsistenciaAlUsuario asistenciaAlUsuario) {
 		asistencia = asistenciaAlUsuario;
+		asistencia.configurarApp(this);
+	}
+
+	public SEM getSEM() {
+		return sem;
+	}
+
+	public String getPatente() {
+		return patente;
 	}
 	
 	

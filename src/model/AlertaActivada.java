@@ -14,4 +14,10 @@ public class AlertaActivada extends AsistenciaAlUsuario{
 		
 	}
 
+	@Override
+	protected void configurarApp(AppEstacionamiento appEstacionamiento) {
+		appEstacionamiento.setEstadoDesplazamiento(new EstadoActivado(appEstacionamiento, appEstacionamiento.getCelular().getGps()));
+		
+	}
+
 }
