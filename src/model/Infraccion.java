@@ -16,9 +16,7 @@ public class Infraccion {
 	}
 
 	public String getPatente() {
-		
 		return patente;
-		
 	}
 
 	public Inspector getInspector() {
