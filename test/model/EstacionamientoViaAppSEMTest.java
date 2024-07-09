@@ -6,7 +6,6 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.po2.unq.*;
 
 class EstacionamientoViaAppTest {
 
@@ -33,3 +32,4 @@ class EstacionamientoViaAppTest {
 	void test() {
 		assertEquals(estacionamientoViaApp.getPatente(), patenteEsperada);
 	}
+}

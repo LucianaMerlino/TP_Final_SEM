@@ -6,8 +6,9 @@ import java.time.LocalTime;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
-import ar.edu.po2.unq.*;
+// import ar.edu.po2.unq.*;
 
 
 class iniciarEstacionamientoViaCompraTest {
@@ -20,6 +21,7 @@ class iniciarEstacionamientoViaCompraTest {
 	CompraPuntual compraPuntual;
 	LocalTime horaInicioCompraPuntual;
 	LocalTime horaFinCompraPuntual;
+	PuntoDeVenta puntoDeVenta;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -30,14 +32,15 @@ class iniciarEstacionamientoViaCompraTest {
 	inicioFranja = LocalTime.of(7, 0);
 	finFranja = LocalTime.of(20, 0);
 	
-	compraPuntual = new CompraPuntual(777, 3, "ABC 123");
+	puntoDeVenta = mock(PuntoDeVenta.class);
+	
+	compraPuntual = new CompraPuntual(777, puntoDeVenta, 3, "ABC 123");
 	
 	horaInicioCompraPuntual = LocalTime.of(8, 0);
 	
 	horaFinCompraPuntual = LocalTime.of(11, 0);
 	
-	primerEstacionamientoViaCompra = new EstacionamientoViaCompra(compraPuntual, horaInicioCompraPuntual,
-																  horaFinCompraPuntual, "ABCD");
+	primerEstacionamientoViaCompra = new EstacionamientoViaCompra(compraPuntual);
 																  
 	// SUT:
 		
@@ -48,7 +51,7 @@ class iniciarEstacionamientoViaCompraTest {
 
 
 	@Test
-	void iniciarEstacionamientoViaCompraTest() {
+	void iniciarEstacionamientoViaCompraSEMTest() {
 	
 		sem.iniciarEstacionamientoViaCompra(compraPuntual);
 		
@@ -58,3 +61,4 @@ class iniciarEstacionamientoViaCompraTest {
 		assertTrue(existeUnEstacionamientoViaCompra);
 	
 	}
+}
