@@ -84,15 +84,13 @@ public class SEM {
 		this.zonas.add(zona);
 	}
 	
-	
-	
 	public void iniciarEstacionamientoViaCompra(CompraPuntual compraPuntual) {
 												
 		this.estacionamientos.add(new EstacionamientoViaCompra(compraPuntual, 
 															   compraPuntual.getHora(),
 															   compraPuntual.getHora(),
 															   compraPuntual.getPatente()));
-	} 
+	}
 	
 	public void iniciarEstacionamientoViaApp(EstacionamientoViaApp estacionamientoViaApp) {
 	
@@ -108,7 +106,7 @@ public class SEM {
 		 
 		 this.getCelulares().stream()
 		 					.forEach(celular -> celular.setCredito(recarga.getMonto()));
-	} 
+	}
 	
 	public void registrarInfraccion(Infraccion infraccion) {
 		
@@ -127,8 +125,6 @@ public class SEM {
 							  .get(0);
 	} 
 	
-	
-	
 	public void finalizarEstacionamientoViaApp(Celular celular) {
 	
 		LocalTime horaActual = LocalTime.now();
@@ -141,9 +137,6 @@ public class SEM {
 								  .filter(estacionamiento -> estacionamiento.getCelular().getNumero() == celular.getNumero())
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(horaActual));     																	
 	} 
-
-	
-
 	
 	public void finalizarTodosLosEstacionamientosVigentes() {
 		
