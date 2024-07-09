@@ -92,13 +92,13 @@ public class SEM {
 															   compraPuntual.getHora(),
 															   compraPuntual.getHora(),
 															   compraPuntual.getPatente()));
-	} // testear
+	} 
 	
 	public void iniciarEstacionamientoViaApp(EstacionamientoViaApp estacionamientoViaApp) {
 	
 		this.estacionamientos.add(estacionamientoViaApp);
 		
-	} // testeado
+	} 
 	
 	public void recargarCredito(RecargaCredito recarga) {
 		/**
@@ -108,12 +108,12 @@ public class SEM {
 		 
 		 this.getCelulares().stream()
 		 					.forEach(celular -> celular.setCredito(recarga.getMonto()));
-	} // testeado
+	} 
 	
 	public void registrarInfraccion(Infraccion infraccion) {
 		
 		this.infracciones.add(infraccion);
-	} // testeado
+	} 
 	
 	public PuntoDeVenta encontrarPuntoBuscadoEnLasZonas(PuntoDeVenta punto) {
 		/**
@@ -125,7 +125,7 @@ public class SEM {
 							  .filter(puntoDeVenta -> puntoDeVenta == punto)
 							  .collect(Collectors.toList())
 							  .get(0);
-	} // testear
+	} 
 	
 	
 	
@@ -140,23 +140,17 @@ public class SEM {
 								  .map(estacionamiento -> (EstacionamientoViaApp) estacionamiento)
 								  .filter(estacionamiento -> estacionamiento.getCelular().getNumero() == celular.getNumero())
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(horaActual));     																	
-	} // testear
+	} 
 
 	
-	
-	
 
-	public boolean esZonamedida(Zona ubicacionActual) {
-		// TODO: hacer
-		return false;
-	}
 	
 	public void finalizarTodosLosEstacionamientosVigentes() {
 		
 		this.getEstacionamientos().stream()
 								  .filter(estacionamiento -> estacionamiento.esVigente())
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
-	}	// testeado
+	}	
 	
 }
 

@@ -2,7 +2,7 @@ package ar.edu.po2.unq.TPFinalSEM;
 
 public class PuntoDeVenta {
 	
-	public CompraPuntual crearCompraPuntual(int nroControl, Double horas, String patente) {
+	public CompraPuntual crearCompraPuntual(int nroControl, int horas, String patente) {
 		
 		return new CompraPuntual(nroControl, horas, patente);
 		
