@@ -6,6 +6,7 @@ import java.time.LocalTime;
 
 public abstract class Estacionamiento {
 	
+<<<<<<< HEAD
 	private LocalDate fecha;
 	protected LocalTime horaInicio;
 	protected LocalTime horaFin;
@@ -17,8 +18,32 @@ public abstract class Estacionamiento {
 	}
 	
 	public String getPatente() {
+=======
+	private LocalDateTime horaInicio;
+	private LocalDateTime horaFin;
+	private String patente;
+	
+	public Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, String patente) {
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
+		this.patente = patente;
+	}
+>>>>>>> 1c74bee497cf6335336915acd2004e6037689274
 
-		return this.patente;
+	public LocalDateTime getHoraInicio() {
+		return horaInicio;
+	}
+	
+	public LocalDateTime getHoraFin() {
+		return horaFin;
+	}
+
+	public String getPatente() {
+		return patente;
+	}
+
+	public Boolean estaVigente() {
+		return (this.horaFin.isBefore(LocalDateTime.now()) || this.getHoraFin() == null);
 	}
 	public LocalDate getFecha() {
 		return fecha;
