@@ -18,7 +18,20 @@ public abstract class Estacionamiento {
 	
 	public String getPatente() {
 
-		return this.patente;
+	public LocalDateTime getHoraInicio() {
+		return horaInicio;
+	}
+	
+	public LocalDateTime getHoraFin() {
+		return horaFin;
+	}
+
+	public String getPatente() {
+		return patente;
+	}
+
+	public Boolean estaVigente() {
+		return (this.horaFin.isBefore(LocalDateTime.now()) || this.getHoraFin() == null);
 	}
 	public LocalDate getFecha() {
 		return fecha;

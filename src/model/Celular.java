@@ -15,6 +15,18 @@ public class Celular {
 	public String getNumero() {
 		return numero;
 	}
+	
+	public Double getCredito() {
+		return credito;
+	}
+	
+	public void cargarCredito(Double monto) {
+		this.credito += monto;
+	}
+	
+	public void consumirCredito(Double monto) {
+		this.credito -= monto;
+	}
 
 	public long getCredito() {
 		// TODO Auto-generated method stub
