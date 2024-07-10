@@ -9,13 +9,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CompraPuntualTest {
+	private SEM semMocked;
 	private PuntoDeVenta puntoDeVentaMocked;
 	private CompraPuntual compraPuntual;
 	
 	@BeforeEach
 	void setUp() throws Exception {
+		semMocked = mock(SEM.class);
 		puntoDeVentaMocked = mock(PuntoDeVenta.class);
-		compraPuntual = new CompraPuntual(1, puntoDeVentaMocked, 2, "AAA");
+		compraPuntual = new CompraPuntual(1, semMocked, puntoDeVentaMocked, 2, "AAA");
 		
 	}
 

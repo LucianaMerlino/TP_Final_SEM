@@ -8,7 +8,7 @@ public abstract class Estacionamiento {
 	private LocalDateTime horaFin;
 	private String patente;
 	
-	public Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, String patente) {
+	protected Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, String patente) {
 		this.horaInicio = horaInicio;
 		this.horaFin = horaFin;
 		this.patente = patente;

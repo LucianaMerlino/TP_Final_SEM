@@ -11,7 +11,7 @@ public class EstacionamientoViaApp extends Estacionamiento {
 		this.celular = celular;
 	}
 	
-	public int getNroCelular() {
+	public String getNroCelular() {
 		return this.celular.getNumero();
 	}
 

@@ -1,6 +1,7 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +12,7 @@ class CelularTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.celular = new Celular(12345678);
+		this.celular = new Celular("12345678");
 	}
 
 	@Test
@@ -21,7 +22,7 @@ class CelularTest {
 	
 	@Test
 	void testGetNumero() {
-		assertEquals(12345678, celular.getNumero());
+		assertEquals("12345678", celular.getNumero());
 	}
 	
 	@Test

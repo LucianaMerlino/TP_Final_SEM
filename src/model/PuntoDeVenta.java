@@ -1,16 +1,23 @@
 package model;
 
 public class PuntoDeVenta {
+
+	private SEM sem;
 	
-	public CompraPuntual crearCompraPuntual(int nroControl, int horas, String patente) {
-		
-		return new CompraPuntual(nroControl, this, horas, patente);
-		
-	}
-	
-	public RecargaCredito crearRecargaCredito(int nroControl, Double monto, Celular celular) {
-		
-		return new RecargaCredito(nroControl, this, monto, celular);
+	public PuntoDeVenta(SEM sem) {
+		this.sem = sem;
 	}
 
+	public void crearEstacionamiento(int nroControl, int horas, String patente) {
+		CompraPuntual compraPuntual = new CompraPuntual(nroControl, this.sem, this, horas, patente);
+		this.sem.registrarCompraPuntual(this);
+		this.sem.iniciarEstacionamientoViaCompra(compraPuntual);
+	}
+
+	public void recargarCredito(int nroControl, Double monto, Celular celular) {
+		RecargaCredito recargaCredito = new RecargaCredito(nroControl, this.sem, this, monto, celular);
+		this.sem.registrarRecargaCredito(recargaCredito);
+		this.sem.recargarCredito(recargaCredito);
+	}
+	
 }
