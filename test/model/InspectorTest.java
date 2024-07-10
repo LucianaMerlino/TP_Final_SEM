@@ -51,7 +51,7 @@ class InspectorTest {
 	
 	@Test
 	void testAltaInfraccion() {
-		infraccion = inspector.altaInfraccion("AAC");
+		inspector.altaInfraccion("AAC");
 		assertNotNull(infraccion);
 		assertEquals("AAC", infraccion.getPatente());
 		assertEquals(inspector, infraccion.getInspector());

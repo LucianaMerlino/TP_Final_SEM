@@ -12,8 +12,8 @@ public class EstacionamientoViaCompra extends Estacionamiento {
 		this.compraPuntual = compraPuntual;
 	}
 	
-	public int getNroCelular() {
-		return 0; //por polimorfismo
+	public String getNroCelular() {
+		return null; //por polimorfismo
 	}
 
 }

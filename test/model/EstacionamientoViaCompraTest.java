@@ -29,8 +29,13 @@ class EstacionamientoViaCompraTest {
 	}
 	
 	@Test
-	void getHoraFin() {
+	void testGetHoraFin() {
 		assertEquals(LocalDateTime.of(LocalDate.of(2024, 7, 4), LocalTime.of(12, 0)), estacionamientoViaCompra.getHoraFin()); 
+	}
+	
+	@Test
+	void testGetNroCelular() {
+		assertNull(estacionamientoViaCompra.getNroCelular());
 	}
 
 }
