@@ -46,17 +46,17 @@ public abstract class ModoEstacionamiento {
 	private Boolean tieneSuficienteCredito(LocalTime horaInicio) {
 		return horaInicio.plusHours(this.calcularTiempoMaximo()).isAfter(this.sem.getFinDeFranjaHoraria()) 
 				|| horaInicio.plusHours(this.calcularTiempoMaximo()).equals(this.sem.getFinDeFranjaHoraria());
-		//horaInicio.plusHours(this.calcularTiempoMaximo()) >= this.sem.getFinDeFranjaHoraria()
+		
 	}
 
 	private int calcularTiempoMaximo() {
 		return (int) (this.celular.getCredito() / this.sem.getPrecioHora());
 	}
 
-	public String finalizarEstacionamiento(String nroCelular) {
-		InfoEstacionamiento infoEstacionamiento = sem.finalizarEstacionamientoViaApp(nroCelular);
+	public String finalizarEstacionamiento(String patente) {
+		InfoEstacionamiento infoEstacionamiento = sem.finalizarEstacionamientoViaApp(patente);
 		double costoEstacionamiento =  infoEstacionamiento.duracion() * sem.getPrecioHora();
-		celular.descontarCredito(costoEstacionamiento);
+		celular.consumirCredito(costoEstacionamiento);
 		return mensajeFinEstacionamiento(infoEstacionamiento.gethInicio(), infoEstacionamiento.gethFin(), 
 										infoEstacionamiento.duracion(), costoEstacionamiento);
 	

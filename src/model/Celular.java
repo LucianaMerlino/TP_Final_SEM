@@ -3,22 +3,20 @@ package model;
 public class Celular {
 	
 	private String numero;
-	private long credito;
+	private Double credito;
 	private GPS gps;
 	
-	public Celular(String numero) {
+	public Celular(String numero, Double credito, GPS gps) {
 		
 		this.numero = numero;
-		this.credito = (long) 0;
+		this.credito = credito;
+		this.gps = gps;
 	}
 
 	public String getNumero() {
 		return numero;
 	}
 	
-	public Double getCredito() {
-		return credito;
-	}
 	
 	public void cargarCredito(Double monto) {
 		this.credito += monto;
@@ -28,15 +26,10 @@ public class Celular {
 		this.credito -= monto;
 	}
 
-	public long getCredito() {
-		// TODO Auto-generated method stub
+	public Double getCredito() {
 		return this.credito;
 	}
 
-	public void descontarCredito(double costoEstacionamiento) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public GPS getGps() {
 		return gps;

@@ -39,7 +39,7 @@ public class AppEstacionamiento {
 	}
 
 	public long saldoDisponible() {
-		return celular.getCredito();
+		return celular.getCredito().longValue();
 	}
 	
 	public void walking() {

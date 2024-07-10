@@ -9,7 +9,7 @@ public class Inspector {
 		
 		return estacionamientos.stream().anyMatch(e->e.getPatente().equals(patente)) 
 				&& 
-				estacionamientos.stream().filter(e->e.getPatente().equals(patente)).collect(Collectors.toList()).get(0).estaVigente();
+				estacionamientos.stream().filter(e->e.getPatente().equals(patente)).collect(Collectors.toList()).get(0).esVigente();
 	}
 	
 	public Infraccion altaInfraccion(String patente) {

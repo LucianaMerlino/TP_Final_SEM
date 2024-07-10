@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Test;
 
 class CelularTest {
 	
-	private Celular celular;
+	Celular celular;
+	GPS gps;
+	
 
 	@BeforeEach
 	void setUp() throws Exception {
-		this.celular = new Celular(12345678);
+		this.celular = new Celular("+12-4567-9876", 0.0, gps);
 	}
 
 	@Test
@@ -21,7 +23,7 @@ class CelularTest {
 	
 	@Test
 	void testGetNumero() {
-		assertEquals(12345678, celular.getNumero());
+		assertEquals("+12-4567-9876", celular.getNumero());
 	}
 	
 	@Test
@@ -31,8 +33,8 @@ class CelularTest {
 	
 	@Test
 	void testCargarCredito() {
-		celular.cargarCredito(1000.00);
-		assertEquals(1000.00, celular.getCredito());
+		celular.cargarCredito(10.0);
+		assertEquals(10.0, celular.getCredito());
 	}
 	
 	@Test

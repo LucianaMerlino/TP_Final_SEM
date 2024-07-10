@@ -38,8 +38,8 @@ class AppEstacionamientoModoManualTest {
 	
 	@Test
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn((long) 2);
-		LocalTime horaFin = horaDeInicio.plusHours(mockedCelular.getCredito());
+		when(mockedCelular.getCredito()).thenReturn(2.0);
+		LocalTime horaFin = horaDeInicio.plusHours(mockedCelular.getCredito().longValue());
 		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
 						"Hora estimada de fin de estacionamiento " + horaFin);
@@ -47,7 +47,7 @@ class AppEstacionamientoModoManualTest {
 	
 	@Test
 	void testIniciarEstacionamientoCuandoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn((long) 10);
+		when(mockedCelular.getCredito()).thenReturn(10.0);
 		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento " + horaDeInicio + "\n" +
 						"Hora estimada de fin de estacionamiento " + finFranjaHoraria);
@@ -57,7 +57,7 @@ class AppEstacionamientoModoManualTest {
 
 	@Test
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCredito() {
-		when(mockedCelular.getCredito()).thenReturn((long) 0);
+		when(mockedCelular.getCredito()).thenReturn(0.0);
 		assertEquals(modoManual.iniciarEstacionamiento(horaDeInicio),
 				"Saldo insuficiente. Estacionamiento no permitido.");
 	}
@@ -77,11 +77,11 @@ class AppEstacionamientoModoManualTest {
 	
 	@Test 
 	void testFinalizarEstacionamientoDebitoDeCredito() {
-		int duracion = 1;
-		int costo = 1;
+		Double duracion = 1.0;
+		Double costo = 1.0;
 		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(LocalTime.of(11, 0, 0), LocalTime.of(12, 0, 0)));
 		modoManual.finalizarEstacionamiento(nroCelular);
-		verify(mockedCelular).descontarCredito(duracion * costo);
+		verify(mockedCelular).consumirCredito(duracion * costo);
 	}
  
 

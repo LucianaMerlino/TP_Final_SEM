@@ -37,8 +37,8 @@ class AppEstacionamientoModoAutomaticoTest {
 	
 	@Test
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn((long) 2);
-		LocalTime horaFin = horaDeInicio.plusHours(mockedCelular.getCredito());
+		when(mockedCelular.getCredito()).thenReturn(2.0);
+		LocalTime horaFin = horaDeInicio.plusHours(mockedCelular.getCredito().longValue());
 		assertEquals(modoAutomatico.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento automático :" + horaDeInicio + "\n" +
 						"Su saldo le permitirá mantener el estacionamiento hasta: " + horaFin);
@@ -47,7 +47,7 @@ class AppEstacionamientoModoAutomaticoTest {
 	
 	@Test
 	void testIniciarEstacionamientoCuandoTieneSuficienteCreditoParaQuedarseHataElFinDeFranjaHoraria() {
-		when(mockedCelular.getCredito()).thenReturn((long) 10);
+		when(mockedCelular.getCredito()).thenReturn(10.0);
 		assertEquals(modoAutomatico.iniciarEstacionamiento(horaDeInicio),
 				"Hora de comienzo de estacionamiento automático :" + horaDeInicio + "\n" +
 						"Su saldo le permitirá mantener el estacionamiento hasta: " + finFranjaHoraria);
@@ -55,7 +55,7 @@ class AppEstacionamientoModoAutomaticoTest {
 	
 	@Test
 	void testIniciarEstacionamientoCuandoNoTieneSuficienteCredito() {
-		when(mockedCelular.getCredito()).thenReturn((long) 0);
+		when(mockedCelular.getCredito()).thenReturn(0.0);
 		assertEquals(modoAutomatico.iniciarEstacionamiento(horaDeInicio),
 				"Saldo insuficiente. Estacionamiento no permitido.");
 	}
@@ -74,11 +74,11 @@ class AppEstacionamientoModoAutomaticoTest {
 	
 	@Test 
 	void testFinalizarEstacionamientoDebitoDeCredito() {
-		int duracion = 1;
-		int costo = 1;
+		Double duracion = 1.0;
+		Double costo = 1.0;
 		when(mockedSEM.finalizarEstacionamientoViaApp(nroCelular)).thenReturn(new InfoEstacionamiento(LocalTime.of(11, 0, 0), LocalTime.of(12, 0, 0)));
 		modoAutomatico.finalizarEstacionamiento(nroCelular);
-		verify(mockedCelular).descontarCredito(duracion * costo);
+		verify(mockedCelular).consumirCredito(duracion * costo);
 	}
 	
 	@Test

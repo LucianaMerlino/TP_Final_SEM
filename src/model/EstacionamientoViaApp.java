@@ -16,6 +16,11 @@ public class EstacionamientoViaApp extends Estacionamiento {
 		return nroCelular;
 	}
 
+	@Override
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
+	}
+
 	
 	
 
