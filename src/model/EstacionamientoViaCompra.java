@@ -12,7 +12,8 @@ public class EstacionamientoViaCompra extends Estacionamiento {
 		this.compraPuntual = compraPuntual;
 	}
 	
-	public String getNroCelular() {
+	@Override
+	public Celular getCelular() {
 		return null; //por polimorfismo
 	}
 

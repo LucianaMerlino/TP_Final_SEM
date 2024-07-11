@@ -21,10 +21,16 @@ public abstract class Estacionamiento {
 	public LocalDateTime getHoraFin() {
 		return horaFin;
 	}
+	
+	public void setHoraFin(LocalDateTime horaFin) {
+		this.horaFin = horaFin;
+	}
 
 	public String getPatente() {
 		return patente;
 	}
+	
+	public abstract Celular getCelular();
 
 	public Boolean estaVigente() {
 		return (this.horaFin.isBefore(LocalDateTime.now()) || this.getHoraFin() == null);
