@@ -13,4 +13,12 @@ public class RecargaCredito extends Compra {
 		this.celular = celular;
 	}
 
+	public Double getMonto() {
+		return monto;
+	}
+
+	public Celular getCelular() {
+		return celular;
+	}
+
 }

@@ -143,6 +143,36 @@ public class SEM {
 		this.getEstacionamientos().stream()
 								  .filter(estacionamiento -> estacionamiento.esVigente())
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
+	}
+
+	public void registrarCompraPuntual(PuntoDeVenta puntoDeVenta) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void registrarRecargaCredito(RecargaCredito recargaCredito) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void registrarCompraPuntual(Class<CompraPuntual> class1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void registrarCompraPuntual(CompraPuntual compraPuntualMocked) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void iniciarEstacionamientoViaCompra(Class<CompraPuntual> class1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void registrarRecargaCredito(Class<RecargaCredito> class1) {
+		// TODO Auto-generated method stub
+		
 	}	
 	
 }
