@@ -14,10 +14,21 @@ public class SEM {
 	private ArrayList<Zona> zonas;
 	private ArrayList<Compra> compras;
 	private ArrayList<Observador> observadores;
-	private LocalTime InicioFranjaHoraria;
+	private LocalTime inicioFranjaHoraria;
 	private LocalTime finFranjaHoraria;
 	private Double precioHora;
 	
+	public SEM(LocalTime inicioFranjaH, LocalTime finFranjaH, Double precioH) {
+		this.inicioFranjaHoraria 	= inicioFranjaH;
+		this.finFranjaHoraria 		= finFranjaH;
+		this.precioHora 			= precioH;
+		this.estacionamientos 		= new ArrayList<Estacionamiento>();
+		this.infracciones 			= new ArrayList<Infraccion>();
+		this.zonas 					= new ArrayList<Zona>();
+		this.compras 				= new ArrayList<Compra>();
+		this.observadores 			= new ArrayList<Observador>();
+		
+	}
 	public ArrayList<Compra> getCompras(){
 		return compras;
 	}
@@ -41,12 +52,17 @@ public class SEM {
 	private LocalTime getFinFranja() {
 		return this.finFranjaHoraria;
 	}	
+	
 	public LocalTime getInicioFranjaHoraria() {
-		return InicioFranjaHoraria;
+		return inicioFranjaHoraria;
+	}
+	
+	public ArrayList<Infraccion> getInfracciones() {
+		return this.infracciones;
 	}
 
 	public void setInicioFranjaHoraria(LocalTime inicioFranjaHoraria) {
-		InicioFranjaHoraria = inicioFranjaHoraria;
+		this.inicioFranjaHoraria = inicioFranjaHoraria;
 	} 
 	
 	public void suscribirObservador(Observador obser) {
@@ -57,9 +73,8 @@ public class SEM {
 		observadores.remove(obser);
 	}
 	
-	
 	public void iniciarEstacionamientoViaCompraPuntual(CompraPuntual compraP) {
-		estacionamientos.add(new EstacionamientoViaCompra(compraP));
+		this.estacionamientos.add(new EstacionamientoViaCompra(compraP));
 		this.compras.add(compraP);
 		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
 	}
@@ -68,8 +83,6 @@ public class SEM {
 		estacionamientos.add(new EstacionamientoViaApp(horaInicio, patente, nroCelular));
 		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
 	}
-
-
 
 	public InfoEstacionamiento finalizarEstacionamientoViaApp(String patente) {
 		Estacionamiento est = encontrarEstacionamientoVigente(patente);
@@ -85,6 +98,7 @@ public class SEM {
 																.esVigente());
 
 	}
+	
 	private Estacionamiento encontrarEstacionamientoVigente(String patente) {
 		return estacionamientoConpatenteEIniciadoHoy(patente)	.stream()
 																.filter(estacionamiento-> estacionamiento.esVigente())
@@ -116,11 +130,10 @@ public class SEM {
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
 	}
 
-	
-	public void registrarInfraccion(Infraccion infraccion) {
+		public void registrarInfraccion(Infraccion infraccion) {
 		this.infracciones.add(infraccion);
 	}
-
+	
 	
 
 
