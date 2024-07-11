@@ -21,8 +21,9 @@ class ZonaTest {
 		this.puntoDeVentaMocked1 = mock(PuntoDeVenta.class);
 		this.puntoDeVentaMocked2 = mock(PuntoDeVenta.class);
 		this.puntoDeVentaMocked3 = mock(PuntoDeVenta.class);
+		inspector = mock(Inspector.class);
 		//SUT
-		this.zona = new Zona();
+		this.zona = new Zona(inspector);
 	}
 
 	@Test

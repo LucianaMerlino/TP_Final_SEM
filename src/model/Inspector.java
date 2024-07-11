@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 public class Inspector {
 	
 	private SEM sem;
+	public Inspector(SEM sem) {
+		this.sem = sem;
+	}
 	
 	public Boolean tieneEstacionamientoVigente(String patente, List<Estacionamiento> estacionamientos) {
 		return estacionamientos.stream().anyMatch(e->e.getPatente().equals(patente)) 

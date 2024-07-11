@@ -26,6 +26,7 @@ class SEM_Test {
 	Estacionamiento mockedEstVigente;
 	Estacionamiento mockedEstNoVigente;
 	InfoEstacionamiento info;
+	RecargaCredito mockedRecarga;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -35,6 +36,7 @@ class SEM_Test {
 		sem = new SEM(inicioFranjaHoraria, finFranjaHoraria, precioHora);
 		mockedObservador = mock(Observador.class);
 		sem.suscribirObservador(mockedObservador);
+		mockedRecarga = mock(RecargaCredito.class);
 	}
 	
 	@Test
@@ -127,6 +129,19 @@ class SEM_Test {
 		sem.registrarInfraccion(infraccion);
 		assertFalse(sem.getInfracciones().isEmpty());
 	}
+	
+	@Test
+	void testRegistrarCompraPuntual() {
+		sem.registrarCompraPuntual(mockedCompra);
+		assertFalse(sem.getCompras().isEmpty());
+	}
+	
+	@Test
+	void testRegistrarRecargaDeCredito() {
+		sem.registrarRecargaCredito(mockedRecarga);
+		assertFalse(sem.getCompras().isEmpty());
+	}
+	
 
 
 }

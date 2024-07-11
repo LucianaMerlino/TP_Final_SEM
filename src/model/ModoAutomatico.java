@@ -42,7 +42,7 @@ public class ModoAutomatico extends ModoEstacionamiento {
 	}
 
 
-	//Testear
+	
 	@Override
 	protected void configurarApp(AppEstacionamiento appEstacionamiento) {
 		appEstacionamiento.setEstadoDesplazamiento(new EstadoActivado(appEstacionamiento, appEstacionamiento.getCelular().getGps()));

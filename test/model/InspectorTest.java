@@ -1,7 +1,9 @@
 package model;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -16,8 +18,8 @@ class InspectorTest {
 	private EstacionamientoViaCompra estacionamientoMocked1;
 	private EstacionamientoViaCompra estacionamientoMocked2;
 	private EstacionamientoViaCompra estacionamientoMocked3;
-	private Infraccion infraccion;
 	private Inspector inspector;
+	private SEM sem;
 	
 	@BeforeEach
 	void setUp() throws Exception {
@@ -26,12 +28,13 @@ class InspectorTest {
 		this.estacionamientoMocked1 = mock(EstacionamientoViaCompra.class);
 		this.estacionamientoMocked2 = mock(EstacionamientoViaCompra.class);
 		this.estacionamientoMocked3 = mock(EstacionamientoViaCompra.class);
+		this.sem = mock(SEM.class);
 		when(estacionamientoMocked1.getPatente()).thenReturn("AAA");
 		when(estacionamientoMocked2.getPatente()).thenReturn("BBB");
 		when(estacionamientoMocked3.getPatente()).thenReturn("CCC");
 		when(estacionamientoMocked2.esVigente()).thenReturn(true);
 		
-		this.inspector = new Inspector();
+		this.inspector = new Inspector(sem);
 		
 	}
 
@@ -51,10 +54,8 @@ class InspectorTest {
 	
 	@Test
 	void testAltaInfraccion() {
-		infraccion = inspector.altaInfraccion("AAC");
-		assertNotNull(infraccion);
-		assertEquals("AAC", infraccion.getPatente());
-		assertEquals(inspector, infraccion.getInspector());
+		inspector.altaInfraccion("AAC");
+		verify(sem).registrarInfraccion(any(Infraccion.class));
 		
 	}
 	

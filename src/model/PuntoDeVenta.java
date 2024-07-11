@@ -17,7 +17,7 @@ public class PuntoDeVenta {
 	public void recargarCredito(int nroControl, Double monto, Celular celular) {
 		RecargaCredito recargaCredito = new RecargaCredito(nroControl, this.sem, this, monto, celular);
 		this.sem.registrarRecargaCredito(recargaCredito);
-		this.sem.recargarCredito(recargaCredito);
+		//this.sem.recargarCredito(recargaCredito);
 	}
 	
 }
