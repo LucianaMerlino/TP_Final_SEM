@@ -73,7 +73,7 @@ public class SEM {
 		observadores.remove(obser);
 	}
 	
-	public void iniciarEstacionamientoViaCompraPuntual(CompraPuntual compraP) {
+	public void iniciarEstacionamientoViaCompra(CompraPuntual compraP) {
 		this.estacionamientos.add(new EstacionamientoViaCompra(compraP));
 		this.compras.add(compraP);
 		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
@@ -133,6 +133,18 @@ public class SEM {
 		public void registrarInfraccion(Infraccion infraccion) {
 		this.infracciones.add(infraccion);
 	}
+		public void registrarCompraPuntual(CompraPuntual compraPuntual) {
+			this.registrarCompra(compraPuntual);
+			
+		}
+		public void registrarRecargaCredito(RecargaCredito recargaCredito) {
+			this.registrarCompra(recargaCredito);
+			this.observadores.stream().forEach(observador -> observador.notificacionRecargaDECredito());
+		}
+		
+		private void registrarCompra(Compra compra) {
+			compras.add(compra);
+		}
 	
 	
 

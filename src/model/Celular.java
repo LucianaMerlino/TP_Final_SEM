@@ -34,8 +34,4 @@ public class Celular {
 	}
 
 
-	public GPS getGps() {
-		return gps;
-	}
-
 }

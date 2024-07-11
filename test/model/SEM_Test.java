@@ -13,7 +13,7 @@ import java.time.LocalTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class SEMTest {
+class SEM_Test {
 
 	SEM sem;
 	LocalTime inicioFranjaHoraria; 
@@ -51,7 +51,7 @@ class SEMTest {
 		mockedCompra = mock(CompraPuntual.class);
 		when(mockedCompra.getFechaHora()).thenReturn(LocalDateTime.of(2024, 2, 2, 14, 0));
 		when(mockedCompra.getPatente()).thenReturn("Patente");
-		sem.iniciarEstacionamientoViaCompraPuntual(mockedCompra);
+		sem.iniciarEstacionamientoViaCompra(mockedCompra);
 		assertFalse(sem.getEstacionamientos().isEmpty());
 		assertFalse(sem.getCompras().isEmpty());
 		verify(mockedObservador).notificacionInicioEstacionamiento();
@@ -127,5 +127,6 @@ class SEMTest {
 		sem.registrarInfraccion(infraccion);
 		assertFalse(sem.getInfracciones().isEmpty());
 	}
+
 
 }
