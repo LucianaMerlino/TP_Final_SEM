@@ -1,21 +1,18 @@
 package model;
 
-public class AlertaActivada extends AsistenciaAlUsuario{
+public class AlertaActivada implements AsistenciaAlUsuario{
 
-	@Override
 	public String alertaDeInicio() {
 		return "Alerta de inicio de estacionamiento, por favor inicie su estacionamineto Medido.";
 		
 	}
 
-	@Override
 	public String alertaDeFin() {
 		return "Alerta de fin de estacionamiento, por favor finalice su estacionamineto Medido.";
 		
 	}
 
-	@Override
-	protected void configurarApp(AppEstacionamiento appEstacionamiento) {
+	public void configurarApp(AppEstacionamiento appEstacionamiento) {
 		appEstacionamiento.setEstadoDesplazamiento(new EstadoActivado(appEstacionamiento, appEstacionamiento.getCelular().getGps()));
 		
 	}

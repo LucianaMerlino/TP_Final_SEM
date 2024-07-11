@@ -21,7 +21,4 @@ public class EstacionamientoViaApp extends Estacionamiento {
 		this.horaFin = horaFin;
 	}
 
-	
-	
-
 }

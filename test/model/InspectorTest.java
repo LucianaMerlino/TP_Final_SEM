@@ -29,7 +29,7 @@ class InspectorTest {
 		when(estacionamientoMocked1.getPatente()).thenReturn("AAA");
 		when(estacionamientoMocked2.getPatente()).thenReturn("BBB");
 		when(estacionamientoMocked3.getPatente()).thenReturn("CCC");
-		when(estacionamientoMocked2.estaVigente()).thenReturn(true);
+		when(estacionamientoMocked2.esVigente()).thenReturn(true);
 		
 		this.inspector = new Inspector();
 		

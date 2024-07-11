@@ -12,15 +12,10 @@ public abstract class Estacionamiento {
 	protected LocalTime horaFin = null;
 	protected String patente;
 	
-<<<<<<< HEAD
-	protected Estacionamiento(LocalDateTime horaInicio, LocalDateTime horaFin, String patente) {
-		this.horaInicio = horaInicio;
-		this.horaFin = horaFin;
-=======
+
 	public Estacionamiento (LocalTime horaIni, String patente) {
 		this.fecha = LocalDate.now();
 		this.horaInicio = horaIni;
->>>>>>> semtesteado
 		this.patente = patente;
 	}
 	
@@ -44,11 +39,9 @@ public abstract class Estacionamiento {
 		return (this.getHoraFin() == null || this.horaFin.isBefore(LocalTime.now()));
 	}
 	
-	public abstract Celular getCelular();
 	public LocalDate getFecha() {
-		return fecha;
+		return this.fecha;
 	}
-	
 
 
 

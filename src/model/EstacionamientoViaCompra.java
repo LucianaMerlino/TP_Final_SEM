@@ -12,10 +12,6 @@ public class EstacionamientoViaCompra extends Estacionamiento {
 		
 	}
 	
-	@Override
-	public Celular getCelular() {
-		return null; //por polimorfismo
-	}
 	private LocalTime calcularHoraFin(CompraPuntual compra) {
 		return compra.getFechaHora().toLocalTime().plusHours((long) compra.getHoras());
 	}

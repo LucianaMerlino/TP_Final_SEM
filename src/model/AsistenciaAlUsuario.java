@@ -1,11 +1,11 @@
 package model;
 
-public abstract class AsistenciaAlUsuario {
+public interface AsistenciaAlUsuario {
 
-	public abstract String alertaDeInicio();
+	public String alertaDeInicio();
 
-	public abstract String alertaDeFin();
-
-	protected abstract void configurarApp(AppEstacionamiento appEstacionamiento);
+	public String alertaDeFin();
+	
+	public void configurarApp(AppEstacionamiento appEstacionamiento);
 
 }
