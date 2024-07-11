@@ -10,7 +10,7 @@ public class PuntoDeVenta {
 
 	public void crearEstacionamiento(int nroControl, int horas, String patente) {
 		CompraPuntual compraPuntual = new CompraPuntual(nroControl, this.sem, this, horas, patente);
-		this.sem.registrarCompraPuntual(this);
+		this.sem.registrarCompraPuntual(compraPuntual);
 		this.sem.iniciarEstacionamientoViaCompra(compraPuntual);
 	}
 
