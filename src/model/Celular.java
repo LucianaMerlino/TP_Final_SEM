@@ -16,9 +16,6 @@ public class Celular {
 		return numero;
 	}
 	
-	public Double getCredito() {
-		return credito;
-	}
 	
 	public GPS getGps() {
 		return gps;
@@ -30,6 +27,15 @@ public class Celular {
 	
 	public void consumirCredito(Double monto) {
 		this.credito -= monto;
+	}
+
+	public Double getCredito() {
+		return this.credito;
+	}
+
+
+	public GPS getGps() {
+		return gps;
 	}
 
 }

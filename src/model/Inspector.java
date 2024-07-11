@@ -10,7 +10,7 @@ public class Inspector {
 	public Boolean tieneEstacionamientoVigente(String patente, List<Estacionamiento> estacionamientos) {
 		return estacionamientos.stream().anyMatch(e->e.getPatente().equals(patente)) 
 				&& 
-				estacionamientos.stream().filter(e->e.getPatente().equals(patente)).collect(Collectors.toList()).get(0).estaVigente();
+				estacionamientos.stream().filter(e->e.getPatente().equals(patente)).collect(Collectors.toList()).get(0).esVigente();
 	}
 	
 	public void altaInfraccion(String patente) {

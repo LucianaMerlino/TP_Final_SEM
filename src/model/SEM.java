@@ -1,123 +1,142 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+//import net.bytebuddy.agent.builder.AgentBuilder.RedefinitionStrategy.BatchAllocator.Slicing;
 
 public class SEM {
 	
-	private int precioPorHora;
+	private ArrayList<Estacionamiento> estacionamientos;
+	private ArrayList<Infraccion> infracciones;
+	private ArrayList<Zona> zonas;
+	private ArrayList<Compra> compras;
+	private ArrayList<Observador> observadores;
 	private LocalTime inicioFranjaHoraria;
 	private LocalTime finFranjaHoraria;
-	private List<Zona> zonas;
-	private List<Compra> compras;
-	private List<Estacionamiento> estacionamientos;
-	private List<Celular> celulares;
-	private List<Infraccion> infracciones;
+	private Double precioHora;
 	
-	
-	public SEM(int precioPorHora, LocalTime inicioFranjaHoraria, 
-			   LocalTime finFranjaHoraria) {
-			   
-		this.precioPorHora = precioPorHora;
-		this.inicioFranjaHoraria = inicioFranjaHoraria;
-		this.finFranjaHoraria = finFranjaHoraria;
-		this.zonas = new ArrayList<Zona>();
-		this.compras = new ArrayList<Compra>();
-		this.estacionamientos = new ArrayList<Estacionamiento>();
-		this.celulares = new ArrayList<Celular>();
-		this.infracciones = new ArrayList<Infraccion>();
+	public SEM(LocalTime inicioFranjaH, LocalTime finFranjaH, Double precioH) {
+		this.inicioFranjaHoraria 	= inicioFranjaH;
+		this.finFranjaHoraria 		= finFranjaH;
+		this.precioHora 			= precioH;
+		this.estacionamientos 		= new ArrayList<Estacionamiento>();
+		this.infracciones 			= new ArrayList<Infraccion>();
+		this.zonas 					= new ArrayList<Zona>();
+		this.compras 				= new ArrayList<Compra>();
+		this.observadores 			= new ArrayList<Observador>();
 		
 	}
+	public ArrayList<Compra> getCompras(){
+		return compras;
+	}
+	
+	public void nuevaZonaMedida(Zona zona) {
+		zonas.add(zona);
+	}
 
-	public int getPrecioHora() {
-		return this.precioPorHora;
+	public LocalTime getFinDeFranjaHoraria() {
+		return finFranjaHoraria;
+	}
+
+	public Double getPrecioHora() {
+		return precioHora;
 	}
 	
-	public LocalTime getInicioFranjaHoraria() {
-		return this.inicioFranjaHoraria;
-	}
-	
-	public void setInicioFranjaHoraria(LocalTime horaInicio) {
-		this.inicioFranjaHoraria = horaInicio;	
-	}
-	
-	public LocalTime getFinFranjaHoraria() {
-		return this.finFranjaHoraria;
-	}
-	
-	public void setFinFranjaHoraria(LocalTime horaFin) {
-		this.finFranjaHoraria = horaFin;
-	}
-	
-	public List<Zona> getZonas() {
-		return this.zonas;
-	}
-	
-	public void registrarZona(Zona zona) {
-		this.zonas.add(zona);
-	}
-	
-	public List<Estacionamiento> getEstacionamientos() {
+	public ArrayList<Estacionamiento> getEstacionamientos() {
 		return this.estacionamientos;
+	}
+	
+	private LocalTime getFinFranja() {
+		return this.finFranjaHoraria;
 	}	
 	
-	public void iniciarEstacionamientoViaCompra(CompraPuntual compraPuntual) {
-		this.estacionamientos.add(new EstacionamientoViaCompra(compraPuntual));
+	public LocalTime getInicioFranjaHoraria() {
+		return inicioFranjaHoraria;
 	}
 	
-	public void iniciarEstacionamientoViaApp(EstacionamientoViaApp estacionamientoViaApp) {
-		this.estacionamientos.add(estacionamientoViaApp);
-	} 
-	
-	public List<Celular> getCelulares() {
-		return this.celulares;
-	}
-	
-	public void registrarCelular(Celular celular) {
-		this.celulares.add(celular);
-	}
-
-	public List<Infraccion> getInfracciones() {
+	public ArrayList<Infraccion> getInfracciones() {
 		return this.infracciones;
 	}
-	
-	public void registrarInfraccion(Infraccion infraccion) {
-		this.infracciones.add(infraccion);
+
+	public void setInicioFranjaHoraria(LocalTime inicioFranjaHoraria) {
+		this.inicioFranjaHoraria = inicioFranjaHoraria;
 	} 
 	
-	public List<Compra> getCompras() {
-		return this.compras;
+	public void suscribirObservador(Observador obser) {
+		observadores.add(obser);
 	}
 	
-	public void registrarCompraPuntual(CompraPuntual compraPuntual) {
-		this.compras.add(compraPuntual);
+	public void dessuscribirObservador(Observador obser) {
+		observadores.remove(obser);
 	}
 	
-	public void recargarCredito(RecargaCredito recarga) {
-		 this.getCelulares().stream()
-		 						.filter(celular -> celular == recarga.getCelular())
-		 						.collect(Collectors.toList()).get(0).cargarCredito(recarga.getMonto());
-		 this.registrarRecargaCredito(recarga);
+	public void iniciarEstacionamientoViaCompraPuntual(CompraPuntual compraP) {
+		this.estacionamientos.add(new EstacionamientoViaCompra(compraP));
+		this.compras.add(compraP);
+		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
 	}
 	
-	public void registrarRecargaCredito(RecargaCredito recargaCredito) {
-		this.compras.add(recargaCredito);
+	public void iniciarEstacionamientoViaApp(LocalTime horaInicio, String patente, String nroCelular) {
+		estacionamientos.add(new EstacionamientoViaApp(horaInicio, patente, nroCelular));
+		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
 	}
-	
-	public void finalizarEstacionamientoViaApp(Celular celular) {
-		LocalDateTime horaActual = LocalDateTime.now();
+
+	public InfoEstacionamiento finalizarEstacionamientoViaApp(String patente) {
+		Estacionamiento est = encontrarEstacionamientoVigente(patente);
+		est.setHoraFin(LocalTime.now());
+		this.observadores.stream().forEach(observador -> observador.notificacionFinEstacionamiento());
+		return new InfoEstacionamiento(est.getHoraInicio(), est.getHoraFin());
 		
-		this.getEstacionamientos().stream().filter(estacionamiento -> estacionamiento.getCelular().getNumero() == celular.getNumero())
-											.collect(Collectors.toList()).get(0).setHoraFin(horaActual);
-	} 
+	}
+
+	public boolean esVigente(String patente) {
+		return 	estacionamientoConpatenteEIniciadoHoy(patente)	.stream()
+																.anyMatch(estacionamiento -> estacionamiento
+																.esVigente());
+
+	}
+	
+	private Estacionamiento encontrarEstacionamientoVigente(String patente) {
+		return estacionamientoConpatenteEIniciadoHoy(patente)	.stream()
+																.filter(estacionamiento-> estacionamiento.esVigente())
+																.toList()
+																.get(0);
+	}
+	
+	private List<Estacionamiento> estacionamientoConpatenteEIniciadoHoy(String patente){
+		return estacionamientosConPatente(patente)	.stream()
+													.filter(estacionamiento -> estacionamiento.getFecha().isEqual(LocalDate.now()))
+													.toList();
+	}
+	
+	private List<Estacionamiento> estacionamientosConPatente(String patente) {
+		List<Estacionamiento> estacionamientosConPatente = estacionamientos	.stream()
+																			.filter(estacionamiento -> estacionamiento.getPatente().equals(patente))
+																			.toList();
+		return estacionamientosConPatente;
+	}
+
+	public boolean esZonaMedida(String posicionUsuario) {
+		return zonas.stream().anyMatch(zona->zona.pertenece(posicionUsuario));
+	}
+
 	
 	public void finalizarTodosLosEstacionamientosVigentes() {
 		this.getEstacionamientos().stream()
-								  .filter(estacionamiento -> estacionamiento.estaVigente())
-								  .forEach(estacionamiento -> estacionamiento.setHoraFin(LocalDateTime.of(LocalDateTime.now().toLocalDate(), this.getFinFranjaHoraria())));	
+								  .filter(estacionamiento -> estacionamiento.esVigente())
+								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
 	}
+
+		public void registrarInfraccion(Infraccion infraccion) {
+		this.infracciones.add(infraccion);
+	}
+	
+	
+
+
+
 
 }

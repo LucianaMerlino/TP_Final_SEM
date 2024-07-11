@@ -1,19 +1,27 @@
 package model;
 
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class EstacionamientoViaApp extends Estacionamiento {
 	
-	private Celular celular;
-	
-	public EstacionamientoViaApp(LocalDateTime horaInicio, String patente, Celular celular) {
-		super(horaInicio, null, patente);
-		this.celular = celular;
+	private String nroCelular;
+
+	public EstacionamientoViaApp(LocalTime horaIni, String patente, String nCelular) {
+		super(horaIni, patente);
+		nroCelular = nCelular;
+		
 	}
-	
+
+	public String getNroCelular() {
+		return nroCelular;
+	}
+
 	@Override
-	public Celular getCelular() {
-		return this.celular;
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
 	}
+
+	
+	
 
 }

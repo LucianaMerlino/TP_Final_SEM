@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 class PuntoDeVentaTest {
 	
-	private SEM semMocked;
 	private CompraPuntual compraPuntual;
 	private RecargaCredito recargaCredito;
 	private Celular celularMocked;
@@ -16,10 +15,10 @@ class PuntoDeVentaTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
-		semMocked = mock(SEM.class);
+		
 		celularMocked = mock(Celular.class);
 
-		puntoDeVenta = new PuntoDeVenta(semMocked);
+		puntoDeVenta = new PuntoDeVenta();
 		
 	}
 
@@ -29,14 +28,14 @@ class PuntoDeVentaTest {
 	}
 	
 	@Test
-	void testCrearEstacionamiento() {
-		puntoDeVenta.crearEstacionamiento(1, 2, "AAA");
+	void testCrearCompraPuntual() {
+		this.compraPuntual = puntoDeVenta.crearCompraPuntual(1, 2, "AAA");
 		assertNotNull(compraPuntual);
 	}
 	
 	@Test
 	void testCrearRecargaCredito() {
-		puntoDeVenta.recargarCredito(1, 2000.00, celularMocked);
+		this.recargaCredito = puntoDeVenta.crearRecargaCredito(1, 2000.00, celularMocked);
 		assertNotNull(recargaCredito);
 	}
 

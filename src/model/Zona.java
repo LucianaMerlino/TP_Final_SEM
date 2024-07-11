@@ -6,9 +6,11 @@ import java.util.List;
 public class Zona {
 
 	private List<PuntoDeVenta> puntosDeVenta;
+	private Inspector inspector;
 	
-	public Zona () {
+	public Zona (Inspector inspector) {
 		this.puntosDeVenta = new ArrayList<PuntoDeVenta>();
+		this.setInspector(inspector);
 	}
 
 	public void agregarPuntoDeVenta(PuntoDeVenta puntoDeVenta) {
@@ -21,6 +23,18 @@ public class Zona {
 
 	public List<PuntoDeVenta> getPuntosDeVenta() {
 		return this.puntosDeVenta;
+	}
+
+	public Inspector getInspector() {
+		return inspector;
+	}
+
+	public void setInspector(Inspector inspector) {
+		this.inspector = inspector;
+	}
+	
+	public Boolean pertenece(String ubicacion) {
+		return true;
 	}
 
 }
