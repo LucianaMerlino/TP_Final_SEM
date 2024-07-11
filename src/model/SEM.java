@@ -12,18 +12,14 @@ public class SEM {
 	private ArrayList<Estacionamiento> estacionamientos;
 	private ArrayList<Infraccion> infracciones;
 	private ArrayList<Zona> zonas;
+	private ArrayList<Compra> compras;
+	private ArrayList<Observador> observadores;
 	private LocalTime InicioFranjaHoraria;
 	private LocalTime finFranjaHoraria;
 	private Double precioHora;
-
-
-	public void iniciarEstacionamientoViaApp(LocalTime horaInicio, String patente, String nroCelular) {
-		estacionamientos.add(new EstacionamientoViaApp(horaInicio, patente, nroCelular));
-		
-	}
 	
-	public void iniciarEstacionamientoViaCompraPuntual(CompraPuntual compraP) {
-		estacionamientos.add(new EstacionamientoViaCompra(compraP));
+	public ArrayList<Compra> getCompras(){
+		return compras;
 	}
 	
 	public void nuevaZonaMedida(Zona zona) {
@@ -41,11 +37,46 @@ public class SEM {
 	public ArrayList<Estacionamiento> getEstacionamientos() {
 		return this.estacionamientos;
 	}
+	
+	private LocalTime getFinFranja() {
+		return this.finFranjaHoraria;
+	}	
+	public LocalTime getInicioFranjaHoraria() {
+		return InicioFranjaHoraria;
+	}
+
+	public void setInicioFranjaHoraria(LocalTime inicioFranjaHoraria) {
+		InicioFranjaHoraria = inicioFranjaHoraria;
+	} 
+	
+	public void suscribirObservador(Observador obser) {
+		observadores.add(obser);
+	}
+	
+	public void dessuscribirObservador(Observador obser) {
+		observadores.remove(obser);
+	}
+	
+	
+	public void iniciarEstacionamientoViaCompraPuntual(CompraPuntual compraP) {
+		estacionamientos.add(new EstacionamientoViaCompra(compraP));
+		this.compras.add(compraP);
+		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
+	}
+	
+	public void iniciarEstacionamientoViaApp(LocalTime horaInicio, String patente, String nroCelular) {
+		estacionamientos.add(new EstacionamientoViaApp(horaInicio, patente, nroCelular));
+		this.observadores.stream().forEach(observador -> observador.notificacionInicioEstacionamiento());
+	}
+
+
 
 	public InfoEstacionamiento finalizarEstacionamientoViaApp(String patente) {
 		Estacionamiento est = encontrarEstacionamientoVigente(patente);
 		est.setHoraFin(LocalTime.now());
+		this.observadores.stream().forEach(observador -> observador.notificacionFinEstacionamiento());
 		return new InfoEstacionamiento(est.getHoraInicio(), est.getHoraFin());
+		
 	}
 
 	public boolean esVigente(String patente) {
@@ -85,21 +116,12 @@ public class SEM {
 								  .forEach(estacionamiento -> estacionamiento.setHoraFin(this.getFinFranja()));	
 	}
 
-	private LocalTime getFinFranja() {
-		return this.finFranjaHoraria;
-	}	
 	
 	public void registrarInfraccion(Infraccion infraccion) {
 		this.infracciones.add(infraccion);
 	}
 
-	public LocalTime getInicioFranjaHoraria() {
-		return InicioFranjaHoraria;
-	}
-
-	public void setInicioFranjaHoraria(LocalTime inicioFranjaHoraria) {
-		InicioFranjaHoraria = inicioFranjaHoraria;
-	} 
+	
 
 
 
